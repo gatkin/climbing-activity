@@ -38,12 +38,40 @@ function completeAsSuccessCreatesACompletedClimb(logger) {
 	logger.debug("climb was successful");
 	Test.assert(completedClimb.wasSuccessful());
 	
-	logger.debug("correct duration...can only compare by string for some reason");
-	var actualDuration = completedClimb.getDuration().value();
-	var expectedDuration = duration.value();
-	Test.assertEqual(expectedDuration.toString(), actualDuration.toString());
+	logger.debug("correct duration");
+	assertDurationsAreEqual(duration, completedClimb.getDuration());
 	
 	return true;
+}
+
+(:test)
+function completeAsFailureCreatesACompletedClimb(logger) {
+	// Arrange
+	var startTime = Time.now();
+	var duration = new Time.Duration(60);
+	var endTime = startTime.add(duration);
+	
+	var climb = createActiveClimb(startTime);
+	
+	// Act
+	logger.debug("end climb");
+	var completedClimb = climb.completeAsFailure(endTime);
+	
+	// Assert
+	logger.debug("climb was not successful");
+	Test.assertEqual(false, completedClimb.wasSuccessful());
+	
+	logger.debug("correct duration");
+	assertDurationsAreEqual(duration, completedClimb.getDuration());
+	
+	return true;
+}
+
+function assertDurationsAreEqual(expected, actual) {
+	// It only works to compare durations by string
+	var expectedDuration = expected.value().toString();
+	var actualDuration = actual.value().toString();
+	Test.assertEqual(expectedDuration, actualDuration);
 }
 
 function createActiveClimb(startTime) {

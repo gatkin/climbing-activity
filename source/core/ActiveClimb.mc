@@ -8,6 +8,12 @@ class ActiveClimb
 		id = start.value();
 	}
 	
+	function completeAsFailure(endTime) {
+		return new CompletedClimb(
+			id, startTime, endTime, false
+		);
+	}
+
 	function completeAsSuccess(endTime) {
 		return new CompletedClimb(
 			id, startTime, endTime, true

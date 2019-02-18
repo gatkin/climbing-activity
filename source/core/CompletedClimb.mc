@@ -3,7 +3,7 @@ class CompletedClimb
 	private var id;
 	private var startTime;
 	private var endTime;
-	private var wasSuccess;
+	private var success;
 	
 	function initialize(
 		identifier,
@@ -15,7 +15,7 @@ class CompletedClimb
 		id = identifier;
 		startTime = start;
 		endTime = end;
-		wasSuccess = successful;
+		success = successful;
 	}
 	
 	function getDuration() {
@@ -23,6 +23,6 @@ class CompletedClimb
 	}
 	
 	function wasSuccessful() {
-		return self.wasSuccessful;
+		return self.success;
 	}
 }
