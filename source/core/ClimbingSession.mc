@@ -11,6 +11,7 @@ module ClimbingCore
 		private var startTime;
 		private var activeClimb;
 		private var completedClimbsCount;
+		private var successfulClimbsCount;
 		private var completedClimbs;
 		
 		function initialize(timeSource) {
@@ -19,6 +20,7 @@ module ClimbingCore
 			id = startTime.value();
 			activeClimb = null;
 			completedClimbsCount = 0;
+			successfulClimbsCount = 0;
 			completedClimbs = new [MAX_CLIMBS];
 		}
 
@@ -29,6 +31,7 @@ module ClimbingCore
 
 		function completeClimbAsSuccess(rating) {
 			var completedClimb = self.activeClimb.completeAsSuccess(self.timeProvider.now(), rating);
+			self.successfulClimbsCount = self.successfulClimbsCount + 1;
 			self.addCompletedClimb(completedClimb);
 		}
 
@@ -50,6 +53,10 @@ module ClimbingCore
 
 		function getNumberOfCompletedClimbs() {
 			return completedClimbsCount;
+		}
+
+		function getNumberOfSuccessfulClimbs() {
+			return self.successfulClimbsCount;
 		}
 
 		function getStartTime() {

@@ -98,11 +98,8 @@ module ClimbingCore
 		var rating = new BoulderRating(0);
 
 		// Act
-		session.startNewClimb();
-		session.completeClimbAsSuccess(rating);
-
-		session.startNewClimb();
-		session.completeClimbAsFailure(rating);
+		completedSuccessfulClimb(session);
+		completeFailedClimb(session);
 
 		// Assert
 		logger.debug("Assert multiple completed climbs");
@@ -138,8 +135,37 @@ module ClimbingCore
 		return true;
 	}
 
+	(:test)
+	function getNumberOfSuccessfulClimbsReturnsCorrectCount(logger) {
+		// Arrange
+		var session = createSession();
+
+		// Act
+		completedSuccessfulClimb(session);
+		completeFailedClimb(session);
+		completedSuccessfulClimb(session);
+
+		// Assert
+		var expectedSuccessfulClimbs = 2;
+		var actualSuccessfulClimbs = session.getNumberOfSuccessfulClimbs();
+		logger.debug("assert " + expectedSuccessfulClimbs + " == " + actualSuccessfulClimbs);
+		Test.assertEqual(expectedSuccessfulClimbs, actualSuccessfulClimbs);
+
+		return true;
+	}
+
 	function assertNoActiveClimb(session) {
 		Test.assert(null == session.getActiveClimb());
+	}
+
+	function completeFailedClimb(session) {
+		session.startNewClimb();
+		session.completeClimbAsFailure(new BoulderRating(2));
+	}
+
+	function completedSuccessfulClimb(session) {
+		session.startNewClimb();
+		session.completeClimbAsSuccess(new BoulderRating(2));
 	}
 
 	function createSession() {
