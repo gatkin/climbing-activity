@@ -1,7 +1,7 @@
 using Toybox.Application;
 using Toybox.WatchUi;
 
-class climbingactivityApp extends Application.AppBase {
+class ClimbingActivityApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
@@ -17,7 +17,7 @@ class climbingactivityApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new climbingactivityView(), new climbingactivityDelegate() ];
+        return [ new ClimbingActivityView(), new ClimbingActivityDelegate() ];
     }
 
 }

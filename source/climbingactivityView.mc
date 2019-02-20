@@ -1,6 +1,6 @@
 using Toybox.WatchUi;
 
-class climbingactivityView extends WatchUi.View {
+class ClimbingActivityView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
