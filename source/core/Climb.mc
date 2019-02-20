@@ -1,5 +1,36 @@
 module ClimbingCore
 {
+	class ActiveClimb
+	{
+		private var id;
+		private var startTime;
+
+		function initialize(start) {
+			startTime = start;
+			id = start.value();
+		}
+
+		function completeAsFailure(endTime, rating) {
+			return new CompletedClimb(
+				id, startTime, endTime, rating, false
+			);
+		}
+
+		function completeAsSuccess(endTime, rating) {
+			return new CompletedClimb(
+				id, startTime, endTime, rating, true
+			);
+		}
+
+		function getId() {
+			return self.id;
+		}
+
+		function getStartTime() {
+			return self.startTime;
+		}
+	}
+
 	class CompletedClimb
 	{
 		private var id;
@@ -7,7 +38,7 @@ module ClimbingCore
 		private var endTime;
 		private var rating;
 		private var success;
-		
+
 		function initialize(
 			identifier,
 			start,
@@ -22,7 +53,7 @@ module ClimbingCore
 			rating = climbRating;
 			success = successful;
 		}
-		
+
 		function getDuration() {
 			return self.endTime.subtract(self.startTime);
 		}
@@ -34,7 +65,7 @@ module ClimbingCore
 		function getRating() {
 			return self.rating;
 		}
-		
+
 		function wasSuccessful() {
 			return self.success;
 		}
