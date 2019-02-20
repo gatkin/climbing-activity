@@ -40,6 +40,10 @@ module ClimbingCore
 			return self.completedClimbs;
 		}
 
+		function getElapsedDuration() {
+			return self.timeProvider.now().subtract(self.startTime);
+		}
+
 		function getId() {
 			return self.id;
 		}

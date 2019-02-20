@@ -116,6 +116,28 @@ module ClimbingCore
 		return true;
 	}
 
+	(:test)
+	function getElapsedDurationReturnsTotalTimeSinceStart(logger) {
+		// Arrange
+		var startTime = Time.now();
+		var timeProvider = new MockTimeProvider(startTime);
+		var session = new ClimbingSession(timeProvider);
+
+		var duration = new Time.Duration(60);
+		var currentTime = startTime.add(duration);
+		timeProvider.setCurrentTime(currentTime);
+
+		// Act
+		logger.debug("get elapsed duration");
+		var actualElapsedDuration = session.getElapsedDuration();
+
+		// Assert
+		logger.debug("assert durations are equal");
+		assertDurationsAreEqual(duration, actualElapsedDuration);
+
+		return true;
+	}
+
 	function assertNoActiveClimb(session) {
 		Test.assert(null == session.getActiveClimb());
 	}
@@ -140,6 +162,10 @@ module ClimbingCore
 
 		function now() {
 			return self.time;
+		}
+
+		function setCurrentTime(t) {
+			self.time = t;
 		}
 	}
 }
