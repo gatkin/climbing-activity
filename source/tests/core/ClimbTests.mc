@@ -32,10 +32,11 @@ module ClimbingCore
 		var endTime = startTime.add(duration);
 		
 		var climb = createActiveClimb(startTime);
+		var rating = new BoulderRating(2);
 		
 		// Act
 		logger.debug("end climb");
-		var completedClimb = climb.completeAsSuccess(endTime);
+		var completedClimb = climb.completeAsSuccess(endTime, rating);
 		
 		// Assert
 		logger.debug("climb was successful");
@@ -43,6 +44,12 @@ module ClimbingCore
 		
 		logger.debug("correct duration");
 		assertDurationsAreEqual(duration, completedClimb.getDuration());
+
+		logger.debug("correct rating");
+		Test.assertEqual(rating, completedClimb.getRating());
+
+		logger.debug("correct id");
+		Test.assertEqual(climb.getId(), completedClimb.getId());
 		
 		return true;
 	}
@@ -55,10 +62,11 @@ module ClimbingCore
 		var endTime = startTime.add(duration);
 		
 		var climb = createActiveClimb(startTime);
+		var rating = new RopedClimbRating(1);
 		
 		// Act
 		logger.debug("end climb");
-		var completedClimb = climb.completeAsFailure(endTime);
+		var completedClimb = climb.completeAsFailure(endTime, rating);
 		
 		// Assert
 		logger.debug("climb was not successful");
@@ -66,6 +74,12 @@ module ClimbingCore
 		
 		logger.debug("correct duration");
 		assertDurationsAreEqual(duration, completedClimb.getDuration());
+
+		logger.debug("correct rating");
+		Test.assertEqual(rating, completedClimb.getRating());
+
+		logger.debug("correct id");
+		Test.assertEqual(climb.getId(), completedClimb.getId());
 		
 		return true;
 	}

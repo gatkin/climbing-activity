@@ -10,15 +10,15 @@ module ClimbingCore
 			id = start.value();
 		}
 		
-		function completeAsFailure(endTime) {
+		function completeAsFailure(endTime, rating) {
 			return new CompletedClimb(
-				id, startTime, endTime, false
+				id, startTime, endTime, rating, false
 			);
 		}
 
-		function completeAsSuccess(endTime) {
+		function completeAsSuccess(endTime, rating) {
 			return new CompletedClimb(
-				id, startTime, endTime, true
+				id, startTime, endTime, rating, true
 			);
 		}
 		
