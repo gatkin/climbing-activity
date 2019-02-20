@@ -8,10 +8,11 @@ module ClimbingCore
 	function createClimbingSessionInitializesSession(logger) {
 		// Arrange
 		var startTime = Time.now();
+		var timeProvider = new MockTimeProvider(startTime);
 		
 		// Act
 		logger.debug("create new session");
-		var session = new ClimbingSession(startTime);
+		var session = new ClimbingSession(timeProvider);
 		
 		// Assert
 		logger.debug("start time is set");
@@ -120,12 +121,25 @@ module ClimbingCore
 	}
 
 	function createSession() {
-		return new ClimbingSession(Time.now());
+		return new ClimbingSession(Time);
 	}
 
 	function createSessionWithActiveClimb() {
 		var session = createSession();
 		session.startNewClimb();
 		return session;
+	}
+
+	class MockTimeProvider
+	{
+		private var time;
+
+		function initialize(t) {
+			time = t;
+		}
+
+		function now() {
+			return self.time;
+		}
 	}
 }

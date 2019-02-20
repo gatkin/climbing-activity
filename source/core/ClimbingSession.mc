@@ -7,26 +7,28 @@ module ClimbingCore
 	class ClimbingSession
 	{
 		private var id;
+		private var timeProvider;
 		private var startTime;
 		private var activeClimb;
 		private var completedClimbsCount;
 		private var completedClimbs;
-
-		function initialize(start) {
-			startTime = start;
-			id = start.value();
+		
+		function initialize(timeSource) {
+			timeProvider = timeSource;
+			startTime = timeSource.now();
+			id = startTime.value();
 			activeClimb = null;
 			completedClimbsCount = 0;
 			completedClimbs = new [MAX_CLIMBS];
 		}
 
 		function completeClimbAsFailure(rating) {
-			var completedClimb = self.activeClimb.completeAsFailure(Time.now(), rating);
+			var completedClimb = self.activeClimb.completeAsFailure(self.timeProvider.now(), rating);
 			self.addCompletedClimb(completedClimb);
 		}
 
 		function completeClimbAsSuccess(rating) {
-			var completedClimb = self.activeClimb.completeAsSuccess(Time.now(), rating);
+			var completedClimb = self.activeClimb.completeAsSuccess(self.timeProvider.now(), rating);
 			self.addCompletedClimb(completedClimb);
 		}
 
@@ -51,7 +53,7 @@ module ClimbingCore
 		}
 
 		function startNewClimb() {
-			self.activeClimb = new ActiveClimb(Time.now());
+			self.activeClimb = new ActiveClimb(self.timeProvider.now());
 		}
 
 		private function addCompletedClimb(completedClimb) {
