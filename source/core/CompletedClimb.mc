@@ -1,28 +1,31 @@
-class CompletedClimb
+module ClimbingCore
 {
-	private var id;
-	private var startTime;
-	private var endTime;
-	private var success;
-	
-	function initialize(
-		identifier,
-		start,
-		end,
-		successful
-	)
+	class CompletedClimb
 	{
-		id = identifier;
-		startTime = start;
-		endTime = end;
-		success = successful;
-	}
-	
-	function getDuration() {
-		return self.endTime.subtract(self.startTime);
-	}
-	
-	function wasSuccessful() {
-		return self.success;
+		private var id;
+		private var startTime;
+		private var endTime;
+		private var success;
+		
+		function initialize(
+			identifier,
+			start,
+			end,
+			successful
+		)
+		{
+			id = identifier;
+			startTime = start;
+			endTime = end;
+			success = successful;
+		}
+		
+		function getDuration() {
+			return self.endTime.subtract(self.startTime);
+		}
+		
+		function wasSuccessful() {
+			return self.success;
+		}
 	}
 }
