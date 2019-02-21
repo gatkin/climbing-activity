@@ -1,14 +1,19 @@
+using Toybox.Time;
 using Toybox.WatchUi;
+using ClimbingCore as Core;
 
 class ClimbingActivityView extends WatchUi.View {
 
+    private var climbingSession;
+
     function initialize() {
         View.initialize();
+        climbingSession = new Core.ClimbingSession(Time);
     }
 
     // Load your resources here
     function onLayout(dc) {
-        setLayout(Rez.Layouts.MainLayout(dc));
+        setLayout(Rez.Layouts.SessionLayout(dc));
     }
 
     // Called when this View is brought to the foreground. Restore
