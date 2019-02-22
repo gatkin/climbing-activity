@@ -2,23 +2,23 @@ module ClimbingView
 {
 	class SessionViewModel
 	{
-		private var elapsedDuration;
+		private var duration;
 		private var totalClimbs;
 		private var successfulClimbs;
 		
 		function initialize(
-			timeElapsed,
+			elapsedDuration,
 			climbsTotal,
 			climbsSuccessful
 		)
 		{
-			elapsedDuration = timeElapsed;
+			duration = elapsedDuration;
 			totalClimbs = climbsTotal;
 			successfulClimbs = climbsSuccessful;
 		}
 		
 		function getDuration() {
-			return self.elapsedDuration;
+			return self.duration;
 		}
 		
 		function getSuccessfulClimbs() {

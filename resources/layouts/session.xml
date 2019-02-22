@@ -10,5 +10,8 @@
     
     
     <label x="20" y="130" text="@Strings.climbs_attempted" color="Graphics.COLOR_BLACK" font="Gfx.FONT_XTINY" />
+    <label id="climbs_attempted_text" x="70" y="140" color="Gfx.COLOR_BLACK" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_NUMBER_HOT"/>
+    
     <label x="140" y="130" text="@Strings.climbs_completed" color="Graphics.COLOR_BLACK" font="Gfx.FONT_XTINY" />
+    <label id="climbs_successful_text" x="170" y="140" color="Gfx.COLOR_BLACK" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_NUMBER_HOT"/>
 </layout>

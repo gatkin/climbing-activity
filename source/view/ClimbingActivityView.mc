@@ -62,6 +62,12 @@ class ClimbingActivityView extends WatchUi.View
     	var totalDuration = ClimbingView.formatDuration(sessionViewModel.getDuration());
         View.findDrawableById("total_time_text").setText(totalDuration);
         
+        var climbsAttempted = sessionViewModel.getTotalClimbs().toString();
+        View.findDrawableById("climbs_attempted_text").setText(climbsAttempted);
+        
+        var climbsSuccessful = sessionViewModel.getSuccessfulClimbs().toString();
+        View.findDrawableById("climbs_successful_text").setText(climbsSuccessful);
+        
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
     }
