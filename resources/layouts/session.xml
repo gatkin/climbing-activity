@@ -6,6 +6,8 @@
 	<drawable id="vertical_center_half_bar" />
 
     <label x="center" y="15" text="@Strings.total_time" color="Graphics.COLOR_BLACK" font="Gfx.FONT_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+    <label id="total_time_text" x="center" y="40" color="Gfx.COLOR_BLACK" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_NUMBER_HOT"/>
+    
     
     <label x="20" y="130" text="@Strings.climbs_attempted" color="Graphics.COLOR_BLACK" font="Gfx.FONT_XTINY" />
     <label x="140" y="130" text="@Strings.climbs_completed" color="Graphics.COLOR_BLACK" font="Gfx.FONT_XTINY" />
