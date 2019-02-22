@@ -98,7 +98,7 @@ module ClimbingCore
 		var rating = new BoulderRating(0);
 
 		// Act
-		completedSuccessfulClimb(session);
+		completeSuccessfulClimb(session);
 		completeFailedClimb(session);
 
 		// Assert
@@ -141,9 +141,9 @@ module ClimbingCore
 		var session = createSession();
 
 		// Act
-		completedSuccessfulClimb(session);
+		completeSuccessfulClimb(session);
 		completeFailedClimb(session);
-		completedSuccessfulClimb(session);
+		completeSuccessfulClimb(session);
 
 		// Assert
 		var expectedSuccessfulClimbs = 2;
@@ -154,44 +154,5 @@ module ClimbingCore
 		return true;
 	}
 
-	function assertNoActiveClimb(session) {
-		Test.assert(null == session.getActiveClimb());
-	}
-
-	function completeFailedClimb(session) {
-		session.startNewClimb();
-		session.completeClimbAsFailure(new BoulderRating(2));
-	}
-
-	function completedSuccessfulClimb(session) {
-		session.startNewClimb();
-		session.completeClimbAsSuccess(new BoulderRating(2));
-	}
-
-	function createSession() {
-		return new ClimbingSession(Time);
-	}
-
-	function createSessionWithActiveClimb() {
-		var session = createSession();
-		session.startNewClimb();
-		return session;
-	}
-
-	class MockTimeProvider
-	{
-		private var time;
-
-		function initialize(t) {
-			time = t;
-		}
-
-		function now() {
-			return self.time;
-		}
-
-		function setCurrentTime(t) {
-			self.time = t;
-		}
-	}
+	
 }
