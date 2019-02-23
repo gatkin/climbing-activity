@@ -19,7 +19,7 @@ module ClimbingCore
         }
 
         function getText() {
-            return "V" + self.rating;
+            return rating.toString();
         }
     }
 

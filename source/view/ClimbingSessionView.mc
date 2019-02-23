@@ -28,15 +28,18 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
     }
 
     function onCancelClimb() {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        self.startTimer();
-
         self.climbingSession.cancelActiveClimb();
-        self.view.update(self.getViewModel());
+        self.restoreSessionView(WatchUi.SLIDE_DOWN);
     }
 
-    function onCompleteClimb() {
-        
+    function onCompletedClimb(climbEndTime, successfulClimb, rating) {
+        if(successfulClimb) {
+            self.climbingSession.completeClimbAsSuccess(climbEndTime, rating);
+        } else {
+            self.climbingSession.completeClimbAsFailure(climbEndTime, rating);
+        }
+
+        self.restoreSessionView(WatchUi.SLIDE_UP);
     }
 
     function onNextPage() {
@@ -57,10 +60,18 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
         return ClimbingView.sessionToViewModel(self.climbingSession, Time.now());
     }
 
+    private function restoreSessionView(transition) {
+        self.climbController = null;  // Allow controller to be GC'd
+        WatchUi.popView(transition); // Remove climb view
+        self.startTimer();
+
+        self.view.update(self.getViewModel());
+    }
+
     private function startClimb() {
         self.timer.stop();
         self.climbingSession.startNewClimb(Time.now());
-        climbController = new ClimbController(self, self.climbingSession.getActiveClimb());
+        self.climbController = new ClimbController(self, self.climbingSession.getActiveClimb());
 
         WatchUi.pushView(climbController.getView(), climbController, WatchUi.SLIDE_UP);
     }

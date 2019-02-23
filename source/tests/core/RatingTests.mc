@@ -6,17 +6,17 @@ module ClimbingCore
     (:test)
     function boulderRating_UsesVScale(logger) {
         var test_cases = [
-            {:value => 0, :display => "V0"},
-            {:value => 1, :display => "V1"},
-            {:value => 2, :display => "V2"},
-            {:value => 3, :display => "V3"},
-            {:value => 4, :display => "V4"},
-            {:value => 5, :display => "V5"},
-            {:value => 6, :display => "V6"},
-            {:value => 7, :display => "V7"},
-            {:value => 8, :display => "V8"},
-            {:value => 9, :display => "V9"},
-            {:value => 10, :display => "V10"},
+            {:value => :V0, :display => "V0"},
+            {:value => :V1, :display => "V1"},
+            {:value => :V2, :display => "V2"},
+            {:value => :V3, :display => "V3"},
+            {:value => :V4, :display => "V4"},
+            {:value => :V5, :display => "V5"},
+            {:value => :V6, :display => "V6"},
+            {:value => :V7, :display => "V7"},
+            {:value => :V8, :display => "V8"},
+            {:value => :V9, :display => "V9"},
+            {:value => :V10, :display => "V10"},
         ];
 
         for(var i = 0; i < test_cases.size(); i++) {

@@ -1,0 +1,13 @@
+<menu id="BoulderRating" title="@Strings.Rating">
+    <menu-item id="V0" label="V0" />
+    <menu-item id="V1" label="V1" />
+    <menu-item id="V2" label="V2" />
+    <menu-item id="V3" label="V3" />
+    <menu-item id="V4" label="V4" />
+    <menu-item id="V5" label="V5" />
+    <menu-item id="V6" label="V6" />
+    <menu-item id="V7" label="V7" />
+    <menu-item id="V8" label="V8" />
+    <menu-item id="V9" label="V9" />
+    <menu-item id="V10" label="V10" />
+</menu>

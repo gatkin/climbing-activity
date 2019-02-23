@@ -14,6 +14,7 @@ class ClimbController extends WatchUi.BehaviorDelegate
     private var view;
     private var climb;
     private var timer;
+    private var climbEndTime;
 
     function initialize(controllerParent, activeClimb) {
         BehaviorDelegate.initialize();
@@ -32,6 +33,15 @@ class ClimbController extends WatchUi.BehaviorDelegate
     function onBack() {
         self.cancelClimb();
         return true;
+    }
+
+    function onClimbRatingProvided(successfulClimb, rating) {
+        self.parentController.onCompletedClimb(
+            self.climbEndTime,
+            successfulClimb,
+            rating
+        );
+        self.parentController = null;
     }
 
     function onNextPage() {
@@ -61,10 +71,12 @@ class ClimbController extends WatchUi.BehaviorDelegate
 
     private function completeClimb() {
         self.stopTimer();
+        self.climbEndTime = Time.now();
+
         var prompt = WatchUi.loadResource(Rez.Strings.successful_climb_prompt);
         WatchUi.pushView(
-            new Confirmation(prompt),
-            new SuccessfulClimbConfirmationDelegate(),
+            new WatchUi.Confirmation(prompt),
+            new SuccessfulClimbConfirmationDelegate(self),
             WatchUi.SLIDE_UP
         );
     }
@@ -115,11 +127,37 @@ class ClimbView extends WatchUi.View
 
 class SuccessfulClimbConfirmationDelegate extends WatchUi.ConfirmationDelegate
 {
-    function initialize() {
+    private var parentController;
+
+    function initialize(parent) {
         ConfirmationDelegate.initialize();
+        parentController = parent;
     }
 
     function onResponse(response) {
+        var successfulClimb = (response == WatchUi.CONFIRM_YES);
+        WatchUi.pushView(
+            new Rez.Menus.BoulderRating(),
+            new BoulderRatingMenuDelegate(self.parentController, successfulClimb),
+            WatchUi.SLIDE_UP
+        );
+    }
+}
 
+
+class BoulderRatingMenuDelegate extends WatchUi.MenuInputDelegate
+{
+    private var parentController;
+    private var successfulClimb;
+
+    function initialize(parent, climbSuccessful) {
+        MenuInputDelegate.initialize();
+        parentController = parent;
+        successfulClimb = climbSuccessful;
+    }
+
+    function onMenuItem(selectedItem) {
+        var rating = new Core.BoulderRating(selectedItem);
+        parentController.onClimbRatingProvided(self.successfulClimb, rating);
     }
 }
