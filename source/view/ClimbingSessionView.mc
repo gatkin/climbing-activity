@@ -4,7 +4,7 @@ using Toybox.WatchUi;
 using ClimbingCore as Core;
 using ClimbingView;
 
-class ClimbingSessionController
+class ClimbingSessionController extends WatchUi.BehaviorDelegate
 {
     private const UPDATE_RATE_MS = 1000;
     
@@ -13,6 +13,7 @@ class ClimbingSessionController
     private var timer;
     
     function initialize() {
+        BehaviorDelegate.initialize();
         climbingSession = new Core.ClimbingSession(Time.now());
         
         view = new ClimbingSessionView(getViewModel());
@@ -23,6 +24,11 @@ class ClimbingSessionController
     
     function getView() {
         return self.view;
+    }
+
+    function onSelect() {
+        System.println("onSelect");
+        return false;
     }
     
     function onTimer() {
