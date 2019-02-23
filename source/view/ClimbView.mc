@@ -30,15 +30,24 @@ class ClimbController extends WatchUi.BehaviorDelegate
     }
 
     function onBack() {
-        self.timer.stop();
-        self.timer = null;
-        self.parentController.onCancelClimb();
-        self.parentController = null;
+        self.cancelClimb();
+        return true;
+    }
+
+    function onPreviousPage() {
+        self.cancelClimb();
         return true;
     }
 
     function onTimer() {
         self.view.update(self.getClimbDuration());
+    }
+
+    private function cancelClimb() {
+        self.timer.stop();
+        self.timer = null;
+        self.parentController.onCancelClimb();
+        self.parentController = null;
     }
 
     private function getClimbDuration() {
