@@ -100,6 +100,9 @@ class ClimbingSessionView extends WatchUi.View
     function onUpdate(dc) {
         var totalDuration = ClimbingView.formatDuration(sessionViewModel.getDuration());
         View.findDrawableById("total_time_text").setText(totalDuration);
+
+        var restDuration = ClimbingView.formatDuration(sessionViewModel.getRestTime());
+        View.findDrawableById("rest_time_text").setText(restDuration);
         
         var climbsAttempted = sessionViewModel.getTotalClimbs().toString();
         View.findDrawableById("climbs_attempted_text").setText(climbsAttempted);

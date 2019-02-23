@@ -38,11 +38,11 @@ module ClimbingView
         Core.completeFailedClimb(session);
         
         var duration = new Time.Duration(60);
-        var climbEndTime = session.getStartTime().add(duration);
+        var currentTime = session.getStartTime().add(duration);
         
         // Act
         logger.debug("convert session to view model");
-        var viewModel = sessionToViewModel(session, climbEndTime);
+        var viewModel = sessionToViewModel(session, currentTime);
         
         // Assert
         logger.debug("correct duration");
@@ -55,6 +55,10 @@ module ClimbingView
         var actualSuccessfulClimbs = viewModel.getSuccessfulClimbs();
         logger.debug("correct successulf climbs: 1 == " +  actualSuccessfulClimbs);
         Test.assertEqual(1, actualSuccessfulClimbs);
+
+        logger.debug("correct rest time");
+        var expectedRestTime = session.getCurrentRestTime(currentTime);
+        Core.assertDurationsAreEqual(expectedRestTime, viewModel.getRestTime());
         
         return true;
     }

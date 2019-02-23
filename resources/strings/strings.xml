@@ -6,6 +6,7 @@
     <string id="menu_label_1">Item 1</string>
     <string id="menu_label_2">Item 2</string>
     <string id="total_time">Total Time</string>
+    <string id="rest_time">Rest Time</string>
     <string id="climbs_attempted">Attempted</string>
     <string id="climbs_completed">Completed</string>
     <string id="successful_climb_prompt">Successful?</string>

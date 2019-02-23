@@ -3,22 +3,29 @@ module ClimbingView
     class SessionViewModel
     {
         private var duration;
+        private var restTime;
         private var totalClimbs;
         private var successfulClimbs;
         
         function initialize(
             elapsedDuration,
+            restDuration,
             climbsTotal,
             climbsSuccessful
         )
         {
             duration = elapsedDuration;
+            restTime = restDuration;
             totalClimbs = climbsTotal;
             successfulClimbs = climbsSuccessful;
         }
         
         function getDuration() {
             return self.duration;
+        }
+
+        function getRestTime() {
+            return self.restTime;
         }
         
         function getSuccessfulClimbs() {
@@ -56,9 +63,12 @@ module ClimbingView
     
     function sessionToViewModel(climbingSession, currentTime) {
         var elapsedDuration = currentTime.subtract(climbingSession.getStartTime());
-        var totalClimbs = climbingSession.getNumberOfCompletedClimbs();
-        var successfulClimbs = climbingSession.getNumberOfSuccessfulClimbs();
         
-        return new SessionViewModel(elapsedDuration, totalClimbs, successfulClimbs);
+        return new SessionViewModel(
+            elapsedDuration,
+            climbingSession.getCurrentRestTime(currentTime),
+            climbingSession.getNumberOfCompletedClimbs(),
+            climbingSession.getNumberOfSuccessfulClimbs()
+        );
     }
 }
