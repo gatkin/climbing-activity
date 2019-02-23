@@ -5,7 +5,7 @@ using Toybox.Time;
 module ClimbingCore
 {
     (:test)
-    function createClimbingSessionInitializesSession(logger) {
+    function createClimbingSession_InitializesSession(logger) {
         // Arrange
         var startTime = Time.now();
         
@@ -29,13 +29,14 @@ module ClimbingCore
     }
 
     (:test)
-    function startNewClimbCreatesAnActiveClimb(logger) {
+    function startNewClimb_CreatesAnActiveClimb(logger) {
         // Arrange
         var session = createSession();
+        var climbStartTime = Time.now();
 
         // Act
         logger.debug("start new climb");
-        session.startNewClimb(Time.now());
+        session.startNewClimb(climbStartTime);
 
         // Assert
         logger.debug("assert active climb is not null");
@@ -45,13 +46,15 @@ module ClimbingCore
     }
 
     (:test)
-    function completeActiveClimbAsSuccessCreatesACompletedClimb(logger) {
+    function completeActiveClimbAsSuccess_CreatesACompletedClimb(logger) {
         // Arrange
         var session = createSessionWithActiveClimb();
+        var climbEndTime = Time.now();
+        var climbRating = new BoulderRating(0);
 
         // Act
         logger.debug("Complete climb as a success");
-        session.completeClimbAsSuccess(Time.now(), new BoulderRating(0));
+        session.completeClimbAsSuccess(climbEndTime, climbRating);
 
         // Assert
         logger.debug("assert no active climb");
@@ -68,13 +71,15 @@ module ClimbingCore
     }
 
     (:test)
-    function completeActiveClimbAsFailureCreatesACompletedClimb(logger) {
+    function completeActiveClimbAsFailure_CreatesACompletedClimb(logger) {
         // Arrange
         var session = createSessionWithActiveClimb();
+        var climbEndTime = Time.now();
+        var climbRating = new BoulderRating(0);
 
         // Act
         logger.debug("Complete climb as a failure");
-        session.completeClimbAsFailure(Time.now(), new BoulderRating(0));
+        session.completeClimbAsFailure(climbEndTime, climbRating);
 
         // Assert
         logger.debug("assert no active climb");
@@ -91,7 +96,7 @@ module ClimbingCore
     }
 
     (:test)
-    function completeActiveClimbSavesMultipleClimbs(logger) {
+    function completeActiveClimb_SavesMultipleClimbs(logger) {
         // Arrange
         var session = createSession();
 
@@ -112,7 +117,7 @@ module ClimbingCore
     }
 
     (:test)
-    function getNumberOfSuccessfulClimbsReturnsCorrectCount(logger) {
+    function getNumberOfSuccessfulClimbs_CountsOnlySuccessfulClimbs(logger) {
         // Arrange
         var session = createSession();
 
@@ -131,7 +136,7 @@ module ClimbingCore
     }
 
     (:test)
-    function cancelClimbCancelsActiveClimb(logger) {
+    function cancelClimb_RemovesActiveClimbWithoutSavingIt(logger) {
         // Arrange
         var session = createSessionWithActiveClimb();
 

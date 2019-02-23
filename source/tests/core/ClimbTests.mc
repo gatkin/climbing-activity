@@ -5,7 +5,7 @@ using Toybox.Time;
 module ClimbingCore
 {
     (:test)
-    function createActiveClimbInitializesClimb(logger) {
+    function createActiveClimb_InitializesClimb(logger) {
         // Arrange
         var startTime = Time.now();
         
@@ -25,7 +25,7 @@ module ClimbingCore
 
 
     (:test)
-    function completeAsSuccessCreatesACompletedClimb(logger) {
+    function completeAsSuccess_CreatesACompletedClimb(logger) {
         // Arrange
         var startTime = Time.now();
         var duration = new Time.Duration(60);
@@ -55,7 +55,7 @@ module ClimbingCore
     }
 
     (:test)
-    function completeAsFailureCreatesACompletedClimb(logger) {
+    function completeAsFailure_CreatesACompletedClimb(logger) {
         // Arrange
         var startTime = Time.now();
         var duration = new Time.Duration(60);

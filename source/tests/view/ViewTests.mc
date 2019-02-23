@@ -31,18 +31,18 @@ module ClimbingView
     }
 
     (:test)
-    function sessionViewModelFromSession(logger) {
+    function sessionToViewModel_ConvertsSessionToViewModel(logger) {
         // Arrange
         var session = Core.createSession();
         Core.completeSuccessfulClimb(session);
         Core.completeFailedClimb(session);
         
         var duration = new Time.Duration(60);
-        var climbStartTime = session.getStartTime().add(duration);
+        var climbEndTime = session.getStartTime().add(duration);
         
         // Act
         logger.debug("convert session to view model");
-        var viewModel = sessionToViewModel(session, climbStartTime);
+        var viewModel = sessionToViewModel(session, climbEndTime);
         
         // Assert
         logger.debug("correct duration");

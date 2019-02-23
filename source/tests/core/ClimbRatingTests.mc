@@ -4,7 +4,7 @@ using Toybox.Test;
 module ClimbingCore
 {
     (:test)
-    function boulderRatingUsesVScale(logger) {
+    function boulderRating_UsesVScale(logger) {
         var test_cases = [
             {:value => 0, :display => "V0"},
             {:value => 1, :display => "V1"},
@@ -38,7 +38,7 @@ module ClimbingCore
     }
 
     (:test)
-    function ropedClimbRatingUsesYosemiteDecimalScale(logger) {
+    function ropedClimbRating_UsesYosemiteDecimalScale(logger) {
         var test_cases = [
             {:value => 0, :display => "5.6"},
             {:value => 1, :display => "5.7"},
