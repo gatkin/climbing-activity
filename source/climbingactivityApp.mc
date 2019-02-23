@@ -4,7 +4,7 @@ using Toybox.WatchUi;
 
 class ClimbingActivityApp extends Application.AppBase {
 
-	private var controller;
+    private var controller;
 
     function initialize() {
         AppBase.initialize();

@@ -1,9 +1,9 @@
 <layout id="SessionLayout">
-	<drawable id="white_background" />
+    <drawable id="white_background" />
 
-	<!-- Draw the dividing lines for the timer -->
-	<drawable id="horizontal_center_bar" />
-	<drawable id="vertical_center_half_bar" />
+    <!-- Draw the dividing lines for the timer -->
+    <drawable id="horizontal_center_bar" />
+    <drawable id="vertical_center_half_bar" />
 
     <label x="center" y="15" text="@Strings.total_time" color="Graphics.COLOR_BLACK" font="Gfx.FONT_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" />
     <label id="total_time_text" x="center" y="40" color="Gfx.COLOR_BLACK" justification="Gfx.TEXT_JUSTIFY_CENTER" font="Gfx.FONT_NUMBER_HOT"/>

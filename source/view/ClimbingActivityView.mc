@@ -6,34 +6,33 @@ using ClimbingView;
 
 class ClimbingActivityController
 {
-	
-	private const UPDATE_RATE_MS = 1000;
-	
-	private var climbingSession;
-	private var view;
-	private var timer;
-	
-	function initialize() {
+    private const UPDATE_RATE_MS = 1000;
+    
+    private var climbingSession;
+    private var view;
+    private var timer;
+    
+    function initialize() {
         climbingSession = new Core.ClimbingSession(Time);
         
-		view = new ClimbingActivityView(getViewModel());
-		
-		timer = new Timer.Timer();
-		timer.start(method(:onTimer), UPDATE_RATE_MS, true);
-	}
-	
-	function getView() {
-		return self.view;
-	}
-	
-	function onTimer() {
-		self.view.update(self.getViewModel());
-	}
-	
-	private function getViewModel() {
-		return ClimbingView.sessionToViewModel(self.climbingSession);
-	}
-	
+        view = new ClimbingActivityView(getViewModel());
+        
+        timer = new Timer.Timer();
+        timer.start(method(:onTimer), UPDATE_RATE_MS, true);
+    }
+    
+    function getView() {
+        return self.view;
+    }
+    
+    function onTimer() {
+        self.view.update(self.getViewModel());
+    }
+    
+    private function getViewModel() {
+        return ClimbingView.sessionToViewModel(self.climbingSession);
+    }
+    
 }
 
 
@@ -59,7 +58,7 @@ class ClimbingActivityView extends WatchUi.View
 
     // Update the view
     function onUpdate(dc) {
-    	var totalDuration = ClimbingView.formatDuration(sessionViewModel.getDuration());
+        var totalDuration = ClimbingView.formatDuration(sessionViewModel.getDuration());
         View.findDrawableById("total_time_text").setText(totalDuration);
         
         var climbsAttempted = sessionViewModel.getTotalClimbs().toString();
@@ -78,8 +77,8 @@ class ClimbingActivityView extends WatchUi.View
     function onHide() {
     }
 
-	function update(newModel) {
-		self.sessionViewModel = newModel;
-		WatchUi.requestUpdate();
-	}
+    function update(newModel) {
+        self.sessionViewModel = newModel;
+        WatchUi.requestUpdate();
+    }
 }
