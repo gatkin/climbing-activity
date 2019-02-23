@@ -35,6 +35,15 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
         self.view.update(self.getViewModel());
     }
 
+    function onCompleteClimb() {
+        var prompt = WatchUi.loadResource(Rez.Strings.successful_climb_prompt);
+        WatchUi.pushView(
+            new Confirmation(prompt),
+            new SuccessfulClimbConfirmationDelegate(),
+            WatchUi.SLIDE_UP
+        );
+    }
+
     function onNextPage() {
         startClimb();
         return true;
@@ -111,5 +120,17 @@ class ClimbingSessionView extends WatchUi.View
     function update(newModel) {
         self.sessionViewModel = newModel;
         WatchUi.requestUpdate();
+    }
+}
+
+
+class SuccessfulClimbConfirmationDelegate extends WatchUi.ConfirmationDelegate
+{
+    function initialize() {
+        ConfirmationDelegate.initialize();
+    }
+
+    function onResponse(response) {
+
     }
 }

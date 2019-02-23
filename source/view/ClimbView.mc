@@ -34,8 +34,18 @@ class ClimbController extends WatchUi.BehaviorDelegate
         return true;
     }
 
+    function onNextPage() {
+        self.completeClimb();
+        return true;
+    }
+
     function onPreviousPage() {
         self.cancelClimb();
+        return true;
+    }
+
+    function onSelect() {
+        self.completeClimb();
         return true;
     }
 
@@ -44,14 +54,24 @@ class ClimbController extends WatchUi.BehaviorDelegate
     }
 
     private function cancelClimb() {
-        self.timer.stop();
-        self.timer = null;
+        self.stopTimer();
         self.parentController.onCancelClimb();
+        self.parentController = null;
+    }
+
+    private function completeClimb() {
+        self.stopTimer();
+        self.parentController.onCompleteClimb();
         self.parentController = null;
     }
 
     private function getClimbDuration() {
         return Time.now().subtract(climb.getStartTime());
+    }
+
+    private function stopTimer() {
+        self.timer.stop();
+        self.timer = null;
     }
 }
 

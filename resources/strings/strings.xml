@@ -8,4 +8,5 @@
     <string id="total_time">Total Time</string>
     <string id="climbs_attempted">Attempted</string>
     <string id="climbs_completed">Completed</string>
+    <string id="successful_climb_prompt">Successful?</string>
 </strings>
