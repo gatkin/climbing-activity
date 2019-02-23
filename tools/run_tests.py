@@ -4,6 +4,17 @@ import subprocess
 import sys
 
 
+FAIL = 'FAIL'
+ERROR = 'ERROR'
+PASS = 'PASS'
+
+TEST_OUTCOME_STRINGS = {
+    FAIL,
+    ERROR,
+    PASS,
+}
+
+
 TestStats = namedtuple('TestStats', [
     'total',
     'passed',
@@ -30,13 +41,13 @@ def parse_output(test_output: str) -> TestStats:
     total_tests = 0
     passed_tests = 0
 
-    for i, line in enumerate(lines[:-1]):
-        next_line = lines[i+1]
-        if not next_line or next_line.startswith('---------'):
-            total_tests += 1
-
-            if line.strip().upper() == 'PASS':
-                passed_tests += 1
+    cleaned_lines = (line.strip().upper() for line in lines)
+    test_outcome_lines = (line for line in cleaned_lines if line in TEST_OUTCOME_STRINGS)
+    
+    for test_outcome in test_outcome_lines:
+        total_tests += 1
+        if test_outcome == PASS:
+            passed_tests += 1
 
     return TestStats(
         total=total_tests,
