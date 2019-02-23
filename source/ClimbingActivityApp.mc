@@ -23,5 +23,4 @@ class ClimbingActivityApp extends Application.AppBase
     function getInitialView() {
         return [ sessionController.getView(), sessionController ];
     }
-
 }

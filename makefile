@@ -1,4 +1,4 @@
-SIMULATOR_OUTPUT=bin/simulator
+SIMULATOR_OUTPUT=bin/climbing-activity.prg
 TEST_OUTPUT_DIR=bin/tests
 TEST_OUTPUT=$(TEST_OUTPUT_DIR)/test.prg
 DEVICE_ID=vivoactive3m

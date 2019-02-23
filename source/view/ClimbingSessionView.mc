@@ -11,6 +11,7 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
     private var climbingSession;
     private var view;
     private var timer;
+    private var climbController;
     
     function initialize() {
         BehaviorDelegate.initialize();
@@ -26,17 +27,27 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
         return self.view;
     }
 
-    function onSelect() {
-        System.println("onSelect");
-        return false;
+    function onNextPage() {
+        startClimb();
+        return true;
     }
-    
+
+    function onSelect() {
+        startClimb();
+        return true;
+    }
+
     function onTimer() {
         self.view.update(self.getViewModel());
     }
     
     private function getViewModel() {
         return ClimbingView.sessionToViewModel(self.climbingSession, Time.now());
+    }
+
+    private function startClimb() {
+        climbController = new ClimbController();
+        WatchUi.pushView(climbController.getView(), climbController, WatchUi.SLIDE_UP);
     }
 }
 
