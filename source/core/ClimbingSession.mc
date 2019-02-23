@@ -22,6 +22,10 @@ module ClimbingCore
             completedClimbs = new [MAX_CLIMBS];
         }
 
+        function cancelActiveClimb() {
+            self.activeClimb = null;
+        }
+
         function completeClimbAsFailure(endTime, rating) {
             var completedClimb = self.activeClimb.completeAsFailure(endTime, rating);
             self.addCompletedClimb(completedClimb);

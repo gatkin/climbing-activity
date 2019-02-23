@@ -32,7 +32,7 @@ class ClimbController extends WatchUi.BehaviorDelegate
     function onBack() {
         self.timer.stop();
         self.timer = null;
-        self.parentController.onChildBack();
+        self.parentController.onCancelClimb();
         self.parentController = null;
         return true;
     }

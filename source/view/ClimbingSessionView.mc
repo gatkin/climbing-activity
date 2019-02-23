@@ -27,10 +27,12 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
         return self.view;
     }
 
-    function onChildBack() {
+    function onCancelClimb() {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
-        self.view.update(self.getViewModel());
         self.startTimer();
+
+        self.climbingSession.cancelActiveClimb();
+        self.view.update(self.getViewModel());
     }
 
     function onNextPage() {

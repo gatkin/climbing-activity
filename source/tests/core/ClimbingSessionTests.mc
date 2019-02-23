@@ -130,5 +130,22 @@ module ClimbingCore
         return true;
     }
 
-    
+    (:test)
+    function cancelClimbCancelsActiveClimb(logger) {
+        // Arrange
+        var session = createSessionWithActiveClimb();
+
+        // Act
+        logger.debug("Cancel active climb");
+        session.cancelActiveClimb();
+
+        // Assert
+        logger.debug("assert no active climb");
+        assertNoActiveClimb(session);
+
+        logger.debug("climb was not saved");
+        Test.assertEqual(0, session.getNumberOfCompletedClimbs());
+
+        return true;
+    }    
 }
