@@ -8,7 +8,7 @@ class ClimbingActivityApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
-        controller = new ClimbingActivityController();
+        controller = new ClimbingSessionController();
     }
 
     // onStart() is called on application start up
