@@ -58,6 +58,10 @@ module ClimbingCore
             return self.endTime.subtract(self.startTime);
         }
 
+        function getEndTime() {
+            return self.endTime;
+        }
+
         function getId() {
             return self.id;
         }

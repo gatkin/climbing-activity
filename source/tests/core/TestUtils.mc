@@ -15,6 +15,11 @@ module ClimbingCore
         Test.assert(null == session.getActiveClimb());
     }
 
+    function completeClimbWithStartAndEndTimes(session, climbStartTime, climbEndTime) {
+        session.startNewClimb(climbStartTime);
+        session.completeClimbAsFailure(climbEndTime, new BoulderRating(3));
+    }
+
     function completeFailedClimb(session) {
         session.startNewClimb(Time.now());
         session.completeClimbAsFailure(Time.now(), new BoulderRating(2));

@@ -45,6 +45,20 @@ module ClimbingCore
             return self.completedClimbs;
         }
 
+        // Get duration since the last completed climb.
+        function getCurrentRestTime(currentTime) {
+            if(self.activeClimb != null) {
+                return new Time.Duration(0);
+            }
+
+            if(self.completedClimbsCount == 0) {
+                return currentTime.subtract(self.startTime);
+            }
+
+            var lastClimb = self.completedClimbs[self.completedClimbsCount - 1];
+            return currentTime.subtract(lastClimb.getEndTime());
+        }
+
         function getId() {
             return self.id;
         }

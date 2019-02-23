@@ -8,21 +8,21 @@ module ClimbingCore
     function createClimbingSession_InitializesSession(logger) {
         // Arrange
         var startTime = Time.now();
-        
+
         // Act
         logger.debug("create new session");
         var session = new ClimbingSession(startTime);
-        
+
         // Assert
         logger.debug("start time is set");
         Test.assertEqual(startTime, session.getStartTime());
-        
+
         logger.debug("id is set");
         Test.assertEqual(startTime.value(), session.getId());
 
         logger.debug("no active climb");
         assertNoActiveClimb(session);
-        
+
         logger.debug("empty list of climbs");
         Test.assertEqual(0, session.getNumberOfCompletedClimbs());
         return true;
@@ -152,5 +152,69 @@ module ClimbingCore
         Test.assertEqual(0, session.getNumberOfCompletedClimbs());
 
         return true;
-    }    
+    }
+
+    (:test)
+    function getCurrentRestTime_ReturnsTotalDurationIfNoCompletedClimbs(logger) {
+        // Arrange
+        var sessionStartTime = Time.now();
+        var session = createSessionWithStartTime(sessionStartTime);
+
+        // Act
+        logger.debug("get current rest time");
+        var expectedDuration = new Time.Duration(60);
+        var currentTime = sessionStartTime.add(expectedDuration);
+        var actualDuration = session.getCurrentRestTime(currentTime);
+
+        // Assert
+        logger.debug("assert durations are equal");
+        assertDurationsAreEqual(expectedDuration, actualDuration);
+
+        return true;
+    }
+
+    (:test)
+    function getCurrentRestTime_ReturnsTimeSinceLastCompletedClimb(logger) {
+        // Arrange
+        var sessionStartTime = Time.now();
+        var climbStartTime = sessionStartTime.add(new Time.Duration(10));
+        var climbEndTime = climbStartTime.add(new Time.Duration(30));
+
+        var session = createSessionWithStartTime(sessionStartTime);
+        completeClimbWithStartAndEndTimes(session, climbStartTime, climbEndTime);
+
+        // Act
+        logger.debug("get current rest time");
+        var expectedDuration = new Time.Duration(45);
+        var currentTime = climbEndTime.add(expectedDuration);
+        var actualDuration = session.getCurrentRestTime(currentTime);
+
+        // Assert
+        logger.debug("assert durations are equal");
+        assertDurationsAreEqual(expectedDuration, actualDuration);
+        
+        return true;
+    }
+
+    (:test)
+    function getCurrentRestTime_ReturnsZeroIfHaveActiveClimb(logger) {
+        // Arrange
+        var sessionStartTime = Time.now();
+        var climbStartTime = sessionStartTime.add(new Time.Duration(10));
+        var currentTime = climbStartTime.add(new Time.Duration(30));
+        
+        var session = createSessionWithStartTime(sessionStartTime);
+        session.startNewClimb(climbStartTime);
+
+        // Act
+        logger.debug("get current rest time");
+        var actualDuration = session.getCurrentRestTime(currentTime);
+
+        // Assert
+        logger.debug("assert durations are equal");
+        var expectedDuration = new Time.Duration(0);
+        assertDurationsAreEqual(expectedDuration, actualDuration);
+        
+        return true;
+    }
 }
