@@ -20,11 +20,17 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
         view = new ClimbingSessionView(getViewModel());
         
         timer = new Timer.Timer();
-        timer.start(method(:onTimer), UPDATE_RATE_MS, true);
+        startTimer();
     }
     
     function getView() {
         return self.view;
+    }
+
+    function onChildBack() {
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        self.view.update(self.getViewModel());
+        self.startTimer();
     }
 
     function onNextPage() {
@@ -46,8 +52,15 @@ class ClimbingSessionController extends WatchUi.BehaviorDelegate
     }
 
     private function startClimb() {
-        climbController = new ClimbController();
+        self.timer.stop();
+        self.climbingSession.startNewClimb(Time.now());
+        climbController = new ClimbController(self, self.climbingSession.getActiveClimb());
+
         WatchUi.pushView(climbController.getView(), climbController, WatchUi.SLIDE_UP);
+    }
+
+    private function startTimer() {
+        timer.start(method(:onTimer), UPDATE_RATE_MS, true);
     }
 }
 
