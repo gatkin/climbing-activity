@@ -54,8 +54,8 @@ module ClimbingView
         return timeField1 + ":" + timeField2;
     }
     
-    function sessionToViewModel(climbingSession) {
-        var elapsedDuration = climbingSession.getElapsedDuration();
+    function sessionToViewModel(climbingSession, currentTime) {
+        var elapsedDuration = currentTime.subtract(climbingSession.getStartTime());
         var totalClimbs = climbingSession.getNumberOfCompletedClimbs();
         var successfulClimbs = climbingSession.getNumberOfSuccessfulClimbs();
         

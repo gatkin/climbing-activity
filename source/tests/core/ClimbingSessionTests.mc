@@ -8,11 +8,10 @@ module ClimbingCore
     function createClimbingSessionInitializesSession(logger) {
         // Arrange
         var startTime = Time.now();
-        var timeProvider = new MockTimeProvider(startTime);
         
         // Act
         logger.debug("create new session");
-        var session = new ClimbingSession(timeProvider);
+        var session = new ClimbingSession(startTime);
         
         // Assert
         logger.debug("start time is set");
@@ -36,7 +35,7 @@ module ClimbingCore
 
         // Act
         logger.debug("start new climb");
-        session.startNewClimb();
+        session.startNewClimb(Time.now());
 
         // Assert
         logger.debug("assert active climb is not null");
@@ -52,7 +51,7 @@ module ClimbingCore
 
         // Act
         logger.debug("Complete climb as a success");
-        session.completeClimbAsSuccess(new BoulderRating(0));
+        session.completeClimbAsSuccess(Time.now(), new BoulderRating(0));
 
         // Assert
         logger.debug("assert no active climb");
@@ -75,7 +74,7 @@ module ClimbingCore
 
         // Act
         logger.debug("Complete climb as a failure");
-        session.completeClimbAsFailure(new BoulderRating(0));
+        session.completeClimbAsFailure(Time.now(), new BoulderRating(0));
 
         // Assert
         logger.debug("assert no active climb");
@@ -95,7 +94,6 @@ module ClimbingCore
     function completeActiveClimbSavesMultipleClimbs(logger) {
         // Arrange
         var session = createSession();
-        var rating = new BoulderRating(0);
 
         // Act
         completeSuccessfulClimb(session);
@@ -109,28 +107,6 @@ module ClimbingCore
         var completedClimbs = session.getCompletedClimbs();
         Test.assert(completedClimbs[0].wasSuccessful());
         Test.assert(!completedClimbs[1].wasSuccessful());
-
-        return true;
-    }
-
-    (:test)
-    function getElapsedDurationReturnsTotalTimeSinceStart(logger) {
-        // Arrange
-        var startTime = Time.now();
-        var timeProvider = new MockTimeProvider(startTime);
-        var session = new ClimbingSession(timeProvider);
-
-        var duration = new Time.Duration(60);
-        var currentTime = startTime.add(duration);
-        timeProvider.setCurrentTime(currentTime);
-
-        // Act
-        logger.debug("get elapsed duration");
-        var actualElapsedDuration = session.getElapsedDuration();
-
-        // Assert
-        logger.debug("assert durations are equal");
-        assertDurationsAreEqual(duration, actualElapsedDuration);
 
         return true;
     }

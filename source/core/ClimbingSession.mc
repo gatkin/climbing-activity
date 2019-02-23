@@ -7,16 +7,14 @@ module ClimbingCore
     class ClimbingSession
     {
         private var id;
-        private var timeProvider;
         private var startTime;
         private var activeClimb;
         private var completedClimbsCount;
         private var successfulClimbsCount;
         private var completedClimbs;
         
-        function initialize(timeSource) {
-            timeProvider = timeSource;
-            startTime = timeSource.now();
+        function initialize(timeStarted) {
+            startTime = timeStarted;
             id = startTime.value();
             activeClimb = null;
             completedClimbsCount = 0;
@@ -24,13 +22,13 @@ module ClimbingCore
             completedClimbs = new [MAX_CLIMBS];
         }
 
-        function completeClimbAsFailure(rating) {
-            var completedClimb = self.activeClimb.completeAsFailure(self.timeProvider.now(), rating);
+        function completeClimbAsFailure(endTime, rating) {
+            var completedClimb = self.activeClimb.completeAsFailure(endTime, rating);
             self.addCompletedClimb(completedClimb);
         }
 
-        function completeClimbAsSuccess(rating) {
-            var completedClimb = self.activeClimb.completeAsSuccess(self.timeProvider.now(), rating);
+        function completeClimbAsSuccess(endTime, rating) {
+            var completedClimb = self.activeClimb.completeAsSuccess(endTime, rating);
             self.successfulClimbsCount = self.successfulClimbsCount + 1;
             self.addCompletedClimb(completedClimb);
         }
@@ -41,10 +39,6 @@ module ClimbingCore
 
         function getCompletedClimbs() {
             return self.completedClimbs;
-        }
-
-        function getElapsedDuration() {
-            return self.timeProvider.now().subtract(self.startTime);
         }
 
         function getId() {
@@ -63,8 +57,8 @@ module ClimbingCore
             return self.startTime;
         }
 
-        function startNewClimb() {
-            self.activeClimb = new ActiveClimb(self.timeProvider.now());
+        function startNewClimb(startTime) {
+            self.activeClimb = new ActiveClimb(startTime);
         }
 
         private function addCompletedClimb(completedClimb) {

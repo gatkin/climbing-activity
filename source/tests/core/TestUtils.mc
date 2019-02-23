@@ -16,43 +16,26 @@ module ClimbingCore
     }
 
     function completeFailedClimb(session) {
-        session.startNewClimb();
-        session.completeClimbAsFailure(new BoulderRating(2));
+        session.startNewClimb(Time.now());
+        session.completeClimbAsFailure(Time.now(), new BoulderRating(2));
     }
 
     function completeSuccessfulClimb(session) {
-        session.startNewClimb();
-        session.completeClimbAsSuccess(new BoulderRating(2));
+        session.startNewClimb(Time.now());
+        session.completeClimbAsSuccess(Time.now(), new BoulderRating(2));
     }
 
     function createSession() {
-        return new ClimbingSession(Time);
+        return createSessionWithStartTime(Time.now());
     }
 
-    function createSessionWithTimeProvider(provider) {
-        return new ClimbingSession(provider);
+    function createSessionWithStartTime(startTime) {
+        return new ClimbingSession(startTime);
     }
 
     function createSessionWithActiveClimb() {
         var session = createSession();
-        session.startNewClimb();
+        session.startNewClimb(Time.now());
         return session;
-    }
-
-    class MockTimeProvider
-    {
-        private var time;
-
-        function initialize(t) {
-            time = t;
-        }
-
-        function now() {
-            return self.time;
-        }
-
-        function setCurrentTime(t) {
-            self.time = t;
-        }
     }
 }

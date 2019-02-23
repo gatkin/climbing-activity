@@ -13,7 +13,7 @@ class ClimbingActivityController
     private var timer;
     
     function initialize() {
-        climbingSession = new Core.ClimbingSession(Time);
+        climbingSession = new Core.ClimbingSession(Time.now());
         
         view = new ClimbingActivityView(getViewModel());
         
@@ -30,9 +30,8 @@ class ClimbingActivityController
     }
     
     private function getViewModel() {
-        return ClimbingView.sessionToViewModel(self.climbingSession);
+        return ClimbingView.sessionToViewModel(self.climbingSession, Time.now());
     }
-    
 }
 
 
