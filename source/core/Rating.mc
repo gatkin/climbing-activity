@@ -37,55 +37,55 @@ module ClimbingCore
 
         function getText() {
             switch(self.rating) {
-                case 0:
+                case :Y56:
                     return "5.6";
                 break;
 
-                case 1:
+                case :Y57:
                     return "5.7";
                 break;
 
-                case 2:
+                case :Y58:
                     return "5.8";
                 break;
 
-                case 3:
+                case :Y59:
                     return "5.9";
                 break;
 
-                case 4:
+                case :Y510A:
                     return "5.10A";
                 break;
 
-                case 5:
+                case :Y510B:
                     return "5.10B";
                 break;
 
-                case 6:
+                case :Y510C:
                     return "5.10C";
                 break;
 
-                case 7:
+                case :Y510D:
                     return "5.10D";
                 break;
 
-                case 8:
+                case :Y511A:
                     return "5.11A";
                 break;
 
-                case 9:
+                case :Y511B:
                     return "5.11B";
                 break;
 
-                case 10:
+                case :Y511C:
                     return "5.11C";
                 break;
 
-                case 11:
+                case :Y511D:
                     return "5.11D";
                 break;
 
-                case 12:
+                case :Y512A:
                     return "5.12A";
                 break;
 

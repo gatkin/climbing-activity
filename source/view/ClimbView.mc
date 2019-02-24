@@ -136,11 +136,7 @@ module ClimbingView
 
         function onResponse(response) {
             var successfulClimb = (response == WatchUi.CONFIRM_YES);
-            WatchUi.pushView(
-                new Rez.Menus.BoulderRating(),
-                new BoulderRatingMenuDelegate(self.parentController, successfulClimb),
-                WatchUi.SLIDE_UP
-            );
+            openBoulderRatingMenu(self.parentController, successfulClimb);
         }
     }
 
@@ -157,8 +153,56 @@ module ClimbingView
         }
 
         function onMenuItem(selectedItem) {
+            if(selectedItem == :RopedClimb) {
+                // Allow the user to provide a rating for a roped climb rather than a bouldering climb
+                WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+                openRopedClimbRatingMenu(self.parentController, self.successfulClimb);
+                return;
+            }
+
             var rating = new Core.BoulderRating(selectedItem);
-            parentController.onClimbRatingProvided(self.successfulClimb, rating);
+            self.parentController.onClimbRatingProvided(self.successfulClimb, rating);
         }
+    }
+
+
+    class RopedClimbRatingMenuDelegate extends WatchUi.MenuInputDelegate
+    {
+        private var parentController;
+        private var successfulClimb;
+
+        function initialize(parent, climbSuccessful) {
+            MenuInputDelegate.initialize();
+            parentController = parent;
+            successfulClimb = climbSuccessful;
+        }
+
+        function onMenuItem(selectedItem) {
+            if(selectedItem == :Boulder) {
+                // Allow the user to provide a rating for a roped climb rather than a bouldering climb
+                WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+                openBoulderRatingMenu(self.parentController, self.successfulClimb);
+                return;
+            }
+
+            var rating = new Core.RopedClimbRating(selectedItem);
+            self.parentController.onClimbRatingProvided(self.successfulClimb, rating);
+        }
+    }
+
+    function openBoulderRatingMenu(parentController, successfulClimb) {
+        WatchUi.pushView(
+            new Rez.Menus.BoulderRating(),
+            new BoulderRatingMenuDelegate(parentController, successfulClimb),
+            WatchUi.SLIDE_UP
+        );
+    }
+
+    function openRopedClimbRatingMenu(parentController, successfulClimb) {
+        WatchUi.pushView(
+            new Rez.Menus.RopedClimbRating(),
+            new RopedClimbRatingMenuDelegate(parentController, successfulClimb),
+            WatchUi.SLIDE_UP
+        );
     }
 }

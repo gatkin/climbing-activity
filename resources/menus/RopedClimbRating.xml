@@ -1,0 +1,16 @@
+<menu id="RopedClimbRating" title="@Strings.Rating">
+    <menu-item id="Boulder" label="@Strings.Boulder" />
+    <menu-item id="Y56" label="5.6" />
+    <menu-item id="Y57" label="5.7" />
+    <menu-item id="Y58" label="5.8" />
+    <menu-item id="Y59" label="5.9" />
+    <menu-item id="Y510A" label="5.10A" />
+    <menu-item id="Y510B" label="5.10B" />
+    <menu-item id="Y510C" label="5.10C" />
+    <menu-item id="Y510D" label="5.10D" />
+    <menu-item id="Y511A" label="5.11A" />
+    <menu-item id="Y511B" label="5.11B" />
+    <menu-item id="Y511C" label="5.11C" />
+    <menu-item id="Y511D" label="5.11D" />
+    <menu-item id="Y512A" label="5.12A" />
+</menu>

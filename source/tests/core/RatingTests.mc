@@ -39,20 +39,22 @@ module ClimbingCore
 
     (:test)
     function ropedClimbRating_UsesYosemiteDecimalScale(logger) {
+        // The "Y" prefix on the symbols is necessary because symbols cannot start with numbers.
+        // The "Y" stands for "Yosemity decimal scale".
         var test_cases = [
-            {:value => 0, :display => "5.6"},
-            {:value => 1, :display => "5.7"},
-            {:value => 2, :display => "5.8"},
-            {:value => 3, :display => "5.9"},
-            {:value => 4, :display => "5.10A"},
-            {:value => 5, :display => "5.10B"},
-            {:value => 6, :display => "5.10C"},
-            {:value => 7, :display => "5.10D"},
-            {:value => 8, :display => "5.11A"},
-            {:value => 9, :display => "5.11B"},
-            {:value => 10, :display => "5.11C"},
-            {:value => 11, :display => "5.11D"},
-            {:value => 12, :display => "5.12A"},
+            {:value => :Y56, :display => "5.6"},
+            {:value => :Y57, :display => "5.7"},
+            {:value => :Y58, :display => "5.8"},
+            {:value => :Y59, :display => "5.9"},
+            {:value => :Y510A, :display => "5.10A"},
+            {:value => :Y510B, :display => "5.10B"},
+            {:value => :Y510C, :display => "5.10C"},
+            {:value => :Y510D, :display => "5.10D"},
+            {:value => :Y511A, :display => "5.11A"},
+            {:value => :Y511B, :display => "5.11B"},
+            {:value => :Y511C, :display => "5.11C"},
+            {:value => :Y511D, :display => "5.11D"},
+            {:value => :Y512A, :display => "5.12A"},
         ];
 
         for(var i = 0; i < test_cases.size(); i++) {

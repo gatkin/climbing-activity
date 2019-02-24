@@ -1,4 +1,5 @@
 <menu id="BoulderRating" title="@Strings.Rating">
+    <menu-item id="RopedClimb" label="@Strings.RopedClimb" />
     <menu-item id="V0" label="V0" />
     <menu-item id="V1" label="V1" />
     <menu-item id="V2" label="V2" />
