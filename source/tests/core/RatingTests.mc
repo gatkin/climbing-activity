@@ -40,7 +40,7 @@ module ClimbingCore
     (:test)
     function ropedClimbRating_UsesYosemiteDecimalScale(logger) {
         // The "Y" prefix on the symbols is necessary because symbols cannot start with numbers.
-        // The "Y" stands for "Yosemity decimal scale".
+        // The "Y" stands for "Yosemite decimal scale".
         var test_cases = [
             {:value => :Y56, :display => "5.6"},
             {:value => :Y57, :display => "5.7"},
@@ -64,7 +64,7 @@ module ClimbingCore
             var rating = new RopedClimbRating(test_case[:value]);
 
             logger.debug("climb type is roped climb");
-            Test.assertEqual(CLIMB_TYPE_ROPE_CLIMB, rating.getClimbType());
+            Test.assertEqual(CLIMB_TYPE_ROPED_CLIMB, rating.getClimbType());
 
             var expectedText = test_case[:display];
             var actualText = rating.getText();

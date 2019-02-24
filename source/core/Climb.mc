@@ -54,6 +54,10 @@ module ClimbingCore
             success = successful;
         }
 
+        function getClimbType() {
+            return self.rating.getClimbType();
+        }
+
         function getDuration() {
             return self.endTime.subtract(self.startTime);
         }

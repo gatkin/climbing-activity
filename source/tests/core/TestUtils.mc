@@ -15,19 +15,29 @@ module ClimbingCore
         Test.assert(null == session.getActiveClimb());
     }
 
+    function completeBoulderClimb(session) {
+        session.startNewClimb(Time.now());
+        session.completeClimbAsSuccess(Time.now(), new BoulderRating(:V0));
+    }
+
     function completeClimbWithStartAndEndTimes(session, climbStartTime, climbEndTime) {
         session.startNewClimb(climbStartTime);
-        session.completeClimbAsFailure(climbEndTime, new BoulderRating(3));
+        session.completeClimbAsFailure(climbEndTime, new BoulderRating(:V0));
     }
 
     function completeFailedClimb(session) {
         session.startNewClimb(Time.now());
-        session.completeClimbAsFailure(Time.now(), new BoulderRating(2));
+        session.completeClimbAsFailure(Time.now(), new BoulderRating(:V0));
+    }
+
+    function completeRopedClimb(session) {
+        session.startNewClimb(Time.now());
+        session.completeClimbAsSuccess(Time.now(), new RopedClimbRating(:Y57));
     }
 
     function completeSuccessfulClimb(session) {
         session.startNewClimb(Time.now());
-        session.completeClimbAsSuccess(Time.now(), new BoulderRating(2));
+        session.completeClimbAsSuccess(Time.now(), new BoulderRating(:V0));
     }
 
     function createSession() {

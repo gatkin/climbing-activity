@@ -3,7 +3,7 @@ module ClimbingCore
     enum
     {
         CLIMB_TYPE_BOULDERING,
-        CLIMB_TYPE_ROPE_CLIMB,
+        CLIMB_TYPE_ROPED_CLIMB,
     }
 
     class BoulderRating
@@ -32,7 +32,7 @@ module ClimbingCore
         }
 
         function getClimbType() {
-            return CLIMB_TYPE_ROPE_CLIMB;
+            return CLIMB_TYPE_ROPED_CLIMB;
         }
 
         function getText() {

@@ -50,7 +50,7 @@ module ClimbingCore
         // Arrange
         var session = createSessionWithActiveClimb();
         var climbEndTime = Time.now();
-        var climbRating = new BoulderRating(0);
+        var climbRating = new BoulderRating(:V0);
 
         // Act
         logger.debug("Complete climb as a success");
@@ -75,7 +75,7 @@ module ClimbingCore
         // Arrange
         var session = createSessionWithActiveClimb();
         var climbEndTime = Time.now();
-        var climbRating = new BoulderRating(0);
+        var climbRating = new BoulderRating(:V0);
 
         // Act
         logger.debug("Complete climb as a failure");
@@ -192,7 +192,7 @@ module ClimbingCore
         // Assert
         logger.debug("assert durations are equal");
         assertDurationsAreEqual(expectedDuration, actualDuration);
-        
+
         return true;
     }
 
@@ -202,7 +202,7 @@ module ClimbingCore
         var sessionStartTime = Time.now();
         var climbStartTime = sessionStartTime.add(new Time.Duration(10));
         var currentTime = climbStartTime.add(new Time.Duration(30));
-        
+
         var session = createSessionWithStartTime(sessionStartTime);
         session.startNewClimb(climbStartTime);
 
@@ -214,7 +214,42 @@ module ClimbingCore
         logger.debug("assert durations are equal");
         var expectedDuration = new Time.Duration(0);
         assertDurationsAreEqual(expectedDuration, actualDuration);
-        
+
+        return true;
+    }
+
+    (:test)
+    function getLastClimbType_ReturnsTypeOfLastCompletedClimb(logger) {
+        // Arrange
+        var session = createSession();
+
+        // Act/Assert
+        completeBoulderClimb(session);
+        var expectedClimbType = CLIMB_TYPE_BOULDERING;
+        var actualClimbType = session.getLastClimbType();
+        logger.debug("climb type: " + expectedClimbType + " == " + actualClimbType);
+        Test.assertEqual(expectedClimbType, actualClimbType);
+
+        completeRopedClimb(session);
+        expectedClimbType = CLIMB_TYPE_ROPED_CLIMB;
+        actualClimbType = session.getLastClimbType();
+        logger.debug("climb type: " + expectedClimbType + " == " + actualClimbType);
+        Test.assertEqual(expectedClimbType, actualClimbType);
+
+        return true;
+    }
+
+    (:test)
+    function getLastClimbType_ReturnsDefaultWhenNoCompletedClimbs(logger) {
+        // Arrange
+        var session = createSession();
+
+        // Act/Assert
+        var expectedClimbType = DEFAULT_CLIMB_TYPE;
+        var actualClimbType = session.getLastClimbType();
+        logger.debug("climb type: " + expectedClimbType + " == " + actualClimbType);
+        Test.assertEqual(expectedClimbType, actualClimbType);
+
         return true;
     }
 }

@@ -8,22 +8,22 @@ module ClimbingView
     class ClimbingSessionController extends WatchUi.BehaviorDelegate
     {
         private const UPDATE_RATE_MS = 1000;
-        
+
         private var climbingSession;
         private var view;
         private var timer;
         private var climbController;
-        
+
         function initialize() {
             BehaviorDelegate.initialize();
             climbingSession = new Core.ClimbingSession(Time.now());
-            
+
             view = new ClimbingSessionView(getViewModel());
-            
+
             timer = new Timer.Timer();
             startTimer();
         }
-        
+
         function getView() {
             return self.view;
         }
@@ -56,7 +56,7 @@ module ClimbingView
         function onTimer() {
             self.view.update(self.getViewModel());
         }
-        
+
         private function getViewModel() {
             return sessionToViewModel(self.climbingSession, Time.now());
         }
@@ -71,7 +71,12 @@ module ClimbingView
         private function startClimb() {
             self.timer.stop();
             self.climbingSession.startNewClimb(Time.now());
-            self.climbController = new ClimbController(self, self.climbingSession.getActiveClimb());
+
+            self.climbController = new ClimbController(
+                self,
+                self.climbingSession.getActiveClimb(),
+                self.climbingSession.getLastClimbType()
+            );
 
             WatchUi.pushView(climbController.getView(), climbController, WatchUi.SLIDE_UP);
         }
@@ -82,7 +87,7 @@ module ClimbingView
     }
 
 
-    class ClimbingSessionView extends WatchUi.View 
+    class ClimbingSessionView extends WatchUi.View
     {
         private var sessionViewModel;
 
@@ -109,13 +114,13 @@ module ClimbingView
 
             var restDuration = formatDuration(sessionViewModel.getRestTime());
             View.findDrawableById("rest_time_text").setText(restDuration);
-            
+
             var climbsAttempted = sessionViewModel.getTotalClimbs().toString();
             View.findDrawableById("climbs_attempted_text").setText(climbsAttempted);
-            
+
             var climbsSuccessful = sessionViewModel.getSuccessfulClimbs().toString();
             View.findDrawableById("climbs_successful_text").setText(climbsSuccessful);
-            
+
             // Call the parent onUpdate function to redraw the layout
             View.onUpdate(dc);
         }

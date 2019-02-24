@@ -3,6 +3,7 @@ using Toybox.Time;
 module ClimbingCore
 {
     const MAX_CLIMBS = 100;
+    const DEFAULT_CLIMB_TYPE = CLIMB_TYPE_BOULDERING;
 
     class ClimbingSession
     {
@@ -12,7 +13,7 @@ module ClimbingCore
         private var completedClimbsCount;
         private var successfulClimbsCount;
         private var completedClimbs;
-        
+
         function initialize(timeStarted) {
             startTime = timeStarted;
             id = startTime.value();
@@ -55,7 +56,7 @@ module ClimbingCore
                 return currentTime.subtract(self.startTime);
             }
 
-            var lastClimb = self.completedClimbs[self.completedClimbsCount - 1];
+            var lastClimb = self.getLastClimb();
             return currentTime.subtract(lastClimb.getEndTime());
         }
 
@@ -63,8 +64,17 @@ module ClimbingCore
             return self.id;
         }
 
+        function getLastClimbType() {
+            if(self.completedClimbsCount == 0) {
+                return DEFAULT_CLIMB_TYPE;
+            }
+
+            var lastClimb = self.getLastClimb();
+            return lastClimb.getClimbType();
+        }
+
         function getNumberOfCompletedClimbs() {
-            return completedClimbsCount;
+            return self.completedClimbsCount;
         }
 
         function getNumberOfSuccessfulClimbs() {
@@ -83,6 +93,10 @@ module ClimbingCore
             self.completedClimbs[self.completedClimbsCount] = completedClimb;
             self.completedClimbsCount = self.completedClimbsCount + 1;
             self.activeClimb = null;
+        }
+
+        private function getLastClimb() {
+            return self.completedClimbs[self.completedClimbsCount - 1];
         }
     }
 }

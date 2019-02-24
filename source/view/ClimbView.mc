@@ -11,15 +11,18 @@ module ClimbingView
         private const UPDATE_RATE_MS = 1000;
 
         private var parentController;
-        private var view;
         private var climb;
+        private var lastClimbType;
+        private var view;
         private var timer;
         private var climbEndTime;
 
-        function initialize(controllerParent, activeClimb) {
+        function initialize(controllerParent, activeClimb, typeOfLastClimb) {
             BehaviorDelegate.initialize();
+
             parentController = controllerParent;
             climb = activeClimb;
+            lastClimbType = typeOfLastClimb;
             view = new ClimbView(getClimbDuration());
 
             timer = new Timer.Timer();
@@ -76,7 +79,7 @@ module ClimbingView
             var prompt = WatchUi.loadResource(Rez.Strings.successful_climb_prompt);
             WatchUi.pushView(
                 new WatchUi.Confirmation(prompt),
-                new SuccessfulClimbConfirmationDelegate(self),
+                new SuccessfulClimbConfirmationDelegate(self, self.lastClimbType),
                 WatchUi.SLIDE_UP
             );
         }
@@ -128,15 +131,23 @@ module ClimbingView
     class SuccessfulClimbConfirmationDelegate extends WatchUi.ConfirmationDelegate
     {
         private var parentController;
+        private var lastClimbType;
 
-        function initialize(parent) {
+        function initialize(parent, typeOfLastClimb) {
             ConfirmationDelegate.initialize();
             parentController = parent;
+            lastClimbType = typeOfLastClimb;
         }
 
         function onResponse(response) {
             var successfulClimb = (response == WatchUi.CONFIRM_YES);
-            openBoulderRatingMenu(self.parentController, successfulClimb);
+
+            // Open the rating menu to whatever the user used last time.
+            if(self.lastClimbType == Core.CLIMB_TYPE_BOULDERING) {
+                openBoulderRatingMenu(self.parentController, successfulClimb);
+            } else {
+                openRopedClimbRatingMenu(self.parentController, successfulClimb);
+            }
         }
     }
 

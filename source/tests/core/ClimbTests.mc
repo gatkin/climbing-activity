@@ -32,7 +32,7 @@ module ClimbingCore
         var endTime = startTime.add(duration);
         
         var climb = createActiveClimb(startTime);
-        var rating = new BoulderRating(2);
+        var rating = new BoulderRating(:V2);
         
         // Act
         logger.debug("end climb");
@@ -62,7 +62,7 @@ module ClimbingCore
         var endTime = startTime.add(duration);
         
         var climb = createActiveClimb(startTime);
-        var rating = new RopedClimbRating(1);
+        var rating = new RopedClimbRating(:Y58);
         
         // Act
         logger.debug("end climb");
