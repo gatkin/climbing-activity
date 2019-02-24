@@ -1,6 +1,7 @@
 using Toybox.Application;
 using Toybox.System;
 using Toybox.WatchUi;
+using ClimbingView;
 
 class ClimbingActivityApp extends Application.AppBase
 {
@@ -8,7 +9,7 @@ class ClimbingActivityApp extends Application.AppBase
 
     function initialize() {
         AppBase.initialize();
-        sessionController = new ClimbingSessionController();
+        sessionController = new ClimbingView.ClimbingSessionController();
     }
 
     // onStart() is called on application start up
