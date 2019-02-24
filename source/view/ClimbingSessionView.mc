@@ -30,7 +30,7 @@ module ClimbingView
 
         function onCancelClimb() {
             self.climbingSession.cancelActiveClimb();
-            self.restoreSessionView(WatchUi.SLIDE_DOWN);
+            self.restoreSessionView();
         }
 
         function onCompletedClimb(climbEndTime, successfulClimb, rating) {
@@ -40,16 +40,38 @@ module ClimbingView
                 self.climbingSession.completeClimbAsFailure(climbEndTime, rating);
             }
 
-            self.restoreSessionView(WatchUi.SLIDE_UP);
+            self.restoreSessionView();
+        }
+
+        function onCompletedSession(completeSession) {
+            if(!completeSession) {
+                self.restoreSessionView();
+                return;
+            }
+
+            var completedSessionController = new CompletedSessionController(
+                self.climbingSession.complete(Time.now())
+            );
+
+            WatchUi.switchToView(
+                completedSessionController.getView(),
+                completedSessionController,
+                WatchUi.SLIDE_UP
+            );
         }
 
         function onNextPage() {
-            startClimb();
+            self.startClimb();
+            return true;
+        }
+
+        function onPreviousPage() {
+            self.completeSession();
             return true;
         }
 
         function onSelect() {
-            startClimb();
+            self.startClimb();
             return true;
         }
 
@@ -57,13 +79,22 @@ module ClimbingView
             self.view.update(self.getViewModel());
         }
 
+        private function completeSession() {
+            self.timer.stop();
+            var prompt = WatchUi.loadResource(Rez.Strings.CompleteSessionPrompt);
+            WatchUi.pushView(
+                new WatchUi.Confirmation(prompt),
+                new CompleteClimbConfirmationDelegate(self),
+                WatchUi.SLIDE_DOWN
+            );
+        }
+
         private function getViewModel() {
             return sessionToViewModel(self.climbingSession, Time.now());
         }
 
-        private function restoreSessionView(transition) {
+        private function restoreSessionView() {
             self.climbController = null;  // Allow controller to be GC'd
-            WatchUi.popView(transition); // Remove climb view
             self.startTimer();
             self.view.update(self.getViewModel());
         }
@@ -134,6 +165,21 @@ module ClimbingView
         function update(newModel) {
             self.sessionViewModel = newModel;
             WatchUi.requestUpdate();
+        }
+    }
+
+    class CompleteClimbConfirmationDelegate extends WatchUi.ConfirmationDelegate
+    {
+        private var parentController;
+
+        function initialize(parent) {
+            ConfirmationDelegate.initialize();
+            parentController = parent;
+        }
+
+        function onResponse(response) {
+            var completeSession = (response == WatchUi.CONFIRM_YES);
+            self.parentController.onCompletedSession(completeSession);
         }
     }
 }

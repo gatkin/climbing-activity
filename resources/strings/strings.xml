@@ -13,4 +13,5 @@
     <string id="Rating">Rating</string>
     <string id="Boulder">Boulder</string>
     <string id="RopedClimb">Roped Climb</string>
+    <string id="CompleteSessionPrompt">End Session?</string>
 </strings>

@@ -1,0 +1,11 @@
+<layout id="CompletedSessionLayout">
+    <drawable id="white_background" />
+    <label
+        x="center"
+        y="center"
+        text="Completed Session"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_LARGE"
+        justification="Graphics.TEXT_JUSTIFY_CENTER"
+    />
+</layout>

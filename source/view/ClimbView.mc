@@ -45,6 +45,9 @@ module ClimbingView
                 rating
             );
             self.parentController = null;
+
+            // Remove the climb view from the view stack
+            WatchUi.popView(WatchUi.SLIDE_UP);
         }
 
         function onNextPage() {
@@ -70,6 +73,9 @@ module ClimbingView
             self.stopTimer();
             self.parentController.onCancelClimb();
             self.parentController = null;
+
+            // Remove the climb view from the view stack
+            WatchUi.popView(WatchUi.SLIDE_DOWN);
         }
 
         private function completeClimb() {
