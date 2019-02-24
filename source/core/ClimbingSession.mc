@@ -24,6 +24,16 @@ module ClimbingCore
             self.activeClimb = null;
         }
 
+        // Complete the session.
+        function complete(sessionEndTime) {
+            return new CompletedClimbingSession(
+                self.id,
+                self.startTime,
+                sessionEndTime,
+                self.completedClimbs
+            );
+        }
+
         function completeClimbAsFailure(endTime, rating) {
             var completedClimb = self.activeClimb.completeAsFailure(endTime, rating);
             self.addCompletedClimb(completedClimb);
@@ -97,6 +107,43 @@ module ClimbingCore
 
         private function getLastClimb() {
             return self.completedClimbs[self.completedClimbs.size() - 1];
+        }
+    }
+
+    class CompletedClimbingSession
+    {
+        private var id;
+        private var startTime;
+        private var endTime;
+        private var climbs;
+
+        function initialize(
+            sessionId,
+            timeStarted,
+            timeEnded,
+            completedClimbs
+        )
+        {
+            id = sessionId;
+            startTime = timeStarted;
+            endTime = timeEnded;
+            climbs = completedClimbs;
+        }
+
+        function getClimbs() {
+            return self.climbs;
+        }
+
+        function getEndTime() {
+            return self.endTime;
+        }
+
+        function getId() {
+            return self.id;
+        }
+
+        function getStartTime() {
+            return self.startTime;
         }
     }
 }

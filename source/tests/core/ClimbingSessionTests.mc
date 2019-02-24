@@ -252,4 +252,31 @@ module ClimbingCore
 
         return true;
     }
+
+    (:test)
+    function complete_CreatesACompletedClimbingSessionWithSessionData(logger) {
+        // Arrange
+        var startTime = Time.now();
+        var endTime = startTime.add(new Time.Duration(30));
+        var session = createSessionWithStartTime(startTime);
+
+        // Act
+        logger.debug("complete the session");
+        var completedSession = session.complete(endTime);
+
+        // Assert
+        logger.debug("session id is set");
+        Test.assertEqual(session.getId(), completedSession.getId());
+
+        logger.debug("start time is set");
+        Test.assertEqual(startTime, completedSession.getStartTime());
+
+        logger.debug("end time is set");
+        Test.assertEqual(endTime, completedSession.getEndTime());
+
+        logger.debug("completed climbs are set");
+        Test.assertEqual(session.getCompletedClimbs().size(), completedSession.getClimbs().size());
+
+        return true;
+    }
 }
