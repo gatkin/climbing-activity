@@ -2,7 +2,6 @@ using Toybox.Time;
 
 module ClimbingCore
 {
-    const MAX_CLIMBS = 100;
     const DEFAULT_CLIMB_TYPE = CLIMB_TYPE_BOULDERING;
 
     class ClimbingSession
@@ -10,7 +9,6 @@ module ClimbingCore
         private var id;
         private var startTime;
         private var activeClimb;
-        private var completedClimbsCount;
         private var successfulClimbsCount;
         private var completedClimbs;
 
@@ -18,9 +16,8 @@ module ClimbingCore
             startTime = timeStarted;
             id = startTime.value();
             activeClimb = null;
-            completedClimbsCount = 0;
             successfulClimbsCount = 0;
-            completedClimbs = new [MAX_CLIMBS];
+            completedClimbs = new [0];
         }
 
         function cancelActiveClimb() {
@@ -52,7 +49,7 @@ module ClimbingCore
                 return new Time.Duration(0);
             }
 
-            if(self.completedClimbsCount == 0) {
+            if(!self.anyCompletedClimbs()) {
                 return currentTime.subtract(self.startTime);
             }
 
@@ -65,7 +62,7 @@ module ClimbingCore
         }
 
         function getLastClimbType() {
-            if(self.completedClimbsCount == 0) {
+            if(!self.anyCompletedClimbs()) {
                 return DEFAULT_CLIMB_TYPE;
             }
 
@@ -74,7 +71,7 @@ module ClimbingCore
         }
 
         function getNumberOfCompletedClimbs() {
-            return self.completedClimbsCount;
+            return self.completedClimbs.size();
         }
 
         function getNumberOfSuccessfulClimbs() {
@@ -90,13 +87,16 @@ module ClimbingCore
         }
 
         private function addCompletedClimb(completedClimb) {
-            self.completedClimbs[self.completedClimbsCount] = completedClimb;
-            self.completedClimbsCount = self.completedClimbsCount + 1;
+            self.completedClimbs.add(completedClimb);
             self.activeClimb = null;
         }
 
+        private function anyCompletedClimbs() {
+            return self.completedClimbs.size() > 0;
+        }
+
         private function getLastClimb() {
-            return self.completedClimbs[self.completedClimbsCount - 1];
+            return self.completedClimbs[self.completedClimbs.size() - 1];
         }
     }
 }
