@@ -1,11 +1,91 @@
 <layout id="CompletedSessionLayout">
     <drawable id="white_background" />
+
+    <!-- Title -->
     <label
+        id="session_title"
         x="center"
-        y="center"
-        text="Completed Session"
+        y="30"
+        text="2-21-2019"
         color="Graphics.COLOR_BLACK"
-        font="Gfx.FONT_LARGE"
+        font="Gfx.FONT_MEDIUM"
         justification="Graphics.TEXT_JUSTIFY_CENTER"
+    />
+    <drawable id="vertical_title_bar" />
+
+    <!-- Session Duration -->
+    <label
+        x="20"
+        y="90"
+        text="Total Time:"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+    <label
+        id="session_duration"
+        x="190"
+        y="90"
+        text="31:40"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+
+    <!-- Attempted Climbs -->
+    <label
+        x="20"
+        y="115"
+        text="Climbs Attempted:"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+    <label
+        id="climbs_attempted"
+        x="190"
+        y="115"
+        text="23"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+
+    <!-- Completed Climbs -->
+    <label
+        x="20"
+        y="140"
+        text="Climbs Completed:"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+    <label
+        id="climbs_completed"
+        x="190"
+        y="140"
+        text="17"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+
+    <!-- Faild Climbs -->
+    <label
+        x="20"
+        y="165"
+        text="Climbs Failed:"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
+    />
+    <label
+        id="climbs_failed"
+        x="190"
+        y="165"
+        text="6"
+        color="Graphics.COLOR_BLACK"
+        font="Gfx.FONT_XTINY"
+        justification="Graphics.TEXT_JUSTIFY_LEFT"
     />
 </layout>

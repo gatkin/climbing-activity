@@ -12,4 +12,7 @@
     <drawable-list id="vertical_center_bar">
         <shape type="rectangle" color="Gfx.COLOR_DK_GRAY" x="center" y="0" width="5" height="fill" />
     </drawable-list>
+    <drawable-list id="vertical_title_bar">
+        <shape type="rectangle" color="Gfx.COLOR_DK_GRAY" x="0" y="75" width="fill" height="10" />
+    </drawable-list>    
 </drawables>
