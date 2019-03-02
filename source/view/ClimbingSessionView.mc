@@ -177,7 +177,7 @@ module ClimbingView
 
         function onResponse(response) {
             var shouldComplete = (response == WatchUi.CONFIRM_YES);
-            self.parentController.onCompleteSessionPromptResponse(promptToCompleteSession);
+            self.parentController.onCompleteSessionPromptResponse(shouldComplete);
         }
     }
 }
