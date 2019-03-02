@@ -12,7 +12,6 @@ module ClimbingView
         private var climbingSession;
         private var view;
         private var timer;
-        private var climbController;
 
         function initialize() {
             BehaviorDelegate.initialize();
@@ -94,7 +93,6 @@ module ClimbingView
         }
 
         private function restoreSessionView() {
-            self.climbController = null;  // Allow controller to be GC'd
             self.startTimer();
             self.view.update(self.getViewModel());
         }
@@ -103,7 +101,7 @@ module ClimbingView
             self.timer.stop();
             self.climbingSession.startNewClimb(Time.now());
 
-            self.climbController = new ClimbController(
+            var climbController = new ClimbController(
                 self,
                 self.climbingSession.getActiveClimb(),
                 self.climbingSession.getLastClimbType()
