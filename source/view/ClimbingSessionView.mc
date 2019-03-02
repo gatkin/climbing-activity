@@ -42,8 +42,8 @@ module ClimbingView
             self.restoreSessionView();
         }
 
-        function onCompletedSession(completeSession) {
-            if(!completeSession) {
+        function onCompleteSessionPromptResponse(shouldComplete) {
+            if(!shouldComplete) {
                 self.restoreSessionView();
                 return;
             }
@@ -65,7 +65,7 @@ module ClimbingView
         }
 
         function onPreviousPage() {
-            self.completeSession();
+            self.promptToCompleteSession();
             return true;
         }
 
@@ -78,18 +78,18 @@ module ClimbingView
             self.view.update(self.getViewModel());
         }
 
-        private function completeSession() {
+        private function getViewModel() {
+            return sessionToViewModel(self.climbingSession, Time.now());
+        }
+
+        private function promptToCompleteSession() {
             self.timer.stop();
             var prompt = WatchUi.loadResource(Rez.Strings.CompleteSessionPrompt);
             WatchUi.pushView(
                 new WatchUi.Confirmation(prompt),
-                new CompleteClimbConfirmationDelegate(self),
+                new CompleteSessionConfirmationDelegate(self),
                 WatchUi.SLIDE_DOWN
             );
-        }
-
-        private function getViewModel() {
-            return sessionToViewModel(self.climbingSession, Time.now());
         }
 
         private function restoreSessionView() {
@@ -166,7 +166,7 @@ module ClimbingView
         }
     }
 
-    class CompleteClimbConfirmationDelegate extends WatchUi.ConfirmationDelegate
+    class CompleteSessionConfirmationDelegate extends WatchUi.ConfirmationDelegate
     {
         private var parentController;
 
@@ -176,8 +176,8 @@ module ClimbingView
         }
 
         function onResponse(response) {
-            var completeSession = (response == WatchUi.CONFIRM_YES);
-            self.parentController.onCompletedSession(completeSession);
+            var shouldComplete = (response == WatchUi.CONFIRM_YES);
+            self.parentController.onCompleteSessionPromptResponse(promptToCompleteSession);
         }
     }
 }
