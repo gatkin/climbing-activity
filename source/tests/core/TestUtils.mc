@@ -40,6 +40,24 @@ module ClimbingCore
         session.completeClimbAsSuccess(Time.now(), new BoulderRating(:V0));
     }
 
+    function createClimb(success) {
+        return new CompletedClimb(
+            1,
+            Time.now(),
+            Time.now(),
+            new BoulderRating(:V0),
+            success
+        );
+    }
+
+    function createFailedClimb() {
+        return createClimb(false);
+    }
+
+    function createSuccessfulClimb() {
+        return createClimb(true);
+    }
+
     function createSession() {
         return createSessionWithStartTime(Time.now());
     }

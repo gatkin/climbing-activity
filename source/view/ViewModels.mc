@@ -1,3 +1,7 @@
+using Toybox.Time;
+using Toybox.Time.Gregorian;
+
+
 module ClimbingView
 {
     class SessionViewModel
@@ -36,6 +40,55 @@ module ClimbingView
             return self.totalClimbs;
         }
     }
+
+    class CompletedSessionViewModel
+    {
+        private var date;
+        private var duration;
+        private var successfulClimbCount;
+        private var failedClimbCount;
+
+        function initialize(
+            dateOfSession,
+            sessionDuration,
+            numSuccessClimbs,
+            numFailedClimbs
+        )
+        {
+            date = dateOfSession;
+            duration = sessionDuration;
+            successfulClimbCount = numSuccessClimbs;
+            failedClimbCount = numFailedClimbs;
+        }
+
+        function getDate() {
+            return self.date;
+        }
+
+        function getDuration() {
+            return self.duration;
+        }
+
+        function getFailedClimbCount() {
+            return self.successfulClimbCount;
+        }
+
+        function getSuccessfulClimbCount() {
+            return self.failedClimbCount;
+        }
+    }
+
+    function completedSessionToViewModel(session) {
+        var date = formatMoment(session.getStartTime());
+        var duration = formatDuration(session.getDuration());
+        
+        return new CompletedSessionViewModel(
+            date,
+            duration,
+            session.getFailedClimbCount(),
+            session.getSuccessfulClimbCount()
+        );
+    }
     
     function formatDuration(duration) {
         var timeField1;
@@ -59,6 +112,12 @@ module ClimbingView
         }
         
         return timeField1 + ":" + timeField2;
+    }
+
+    // Format a Moment as YYYY-MM-DD (e.g. 2019-2-21).
+    function formatMoment(moment) {
+        var date = Gregorian.info(moment, Time.FORMAT_SHORT);
+        return date.year.toString() + "-" + date.month.toString() + "-" + date.day.toString();
     }
     
     function sessionToViewModel(climbingSession, currentTime) {

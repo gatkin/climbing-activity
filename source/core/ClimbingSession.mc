@@ -116,6 +116,8 @@ module ClimbingCore
         private var startTime;
         private var endTime;
         private var climbs;
+        private var successfulClimbCount;
+        private var failedClimbCount;
 
         function initialize(
             sessionId,
@@ -128,14 +130,24 @@ module ClimbingCore
             startTime = timeStarted;
             endTime = timeEnded;
             climbs = completedClimbs;
+
+            setClimbCounts(climbs);
         }
 
         function getClimbs() {
             return self.climbs;
         }
 
+        function getDuration() {
+            return self.endTime.subtract(self.startTime);
+        }
+
         function getEndTime() {
             return self.endTime;
+        }
+
+        function getFailedClimbCount() {
+            return self.failedClimbCount;
         }
 
         function getId() {
@@ -144,6 +156,23 @@ module ClimbingCore
 
         function getStartTime() {
             return self.startTime;
+        }
+
+        function getSuccessfulClimbCount() {
+            return self.successfulClimbCount;
+        }
+
+        private function setClimbCounts(climbs) {
+            self.successfulClimbCount = 0;
+            self.failedClimbCount = 0;
+
+            for(var i = 0; i < climbs.size(); i++) {
+                if(climbs[i].wasSuccessful()) {
+                    self.successfulClimbCount++;
+                } else {
+                    self.failedClimbCount++;
+                }
+            }
         }
     }
 }

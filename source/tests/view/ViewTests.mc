@@ -62,4 +62,52 @@ module ClimbingView
         
         return true;
     }
+
+    (:test)
+    function completedSessionToViewModel_ConvertsToViewModel(logger) {
+        // Arrange
+        var id = 1;
+        var startTime = new Time.Moment(1551568192);
+        var duration = new Time.Duration(95);
+        var endTime = startTime.add(duration);
+        var climbs = [
+            Core.createSuccessfulClimb(),
+            Core.createFailedClimb(),
+            Core.createSuccessfulClimb()
+        ];
+
+        var session = new Core.CompletedClimbingSession(
+            id,
+            startTime,
+            endTime,
+            climbs
+        );
+
+        // Act
+        logger.debug("create view model");
+        var viewModel = completedSessionToViewModel(session);
+
+        // Assert
+        var expectedDate = "2019-3-2";
+        var actualDate = viewModel.getDate();
+        logger.debug("date: " + expectedDate + " == " + actualDate);
+        Test.assertEqual(expectedDate, actualDate);
+
+        var expectedDuration = "01:35";
+        var actualDuration = viewModel.getDuration();
+        logger.debug("duration: " + expectedDuration + " == " + actualDuration);
+        Test.assertEqual(expectedDuration, actualDuration);
+
+        var expectedSuccessfulClimbs = 2;
+        var actualSuccessfulClimbs = viewModel.getSuccessfulClimbCount();
+        logger.debug("successful climbs: " + expectedSuccessfulClimbs + " == " + actualSuccessfulClimbs);
+        Test.assertEqual(expectedSuccessfulClimbs, actualSuccessfulClimbs);
+
+        var expectedFailedClimbs = 1;
+        var actualFailedClimbs = viewModel.getFailedClimbCount();
+        logger.debug("failed climbs: " + expectedFailedClimbs + " == " + actualFailedClimbs);
+        Test.assertEqual(expectedFailedClimbs, actualFailedClimbs);
+
+        return true;
+    }
 }
