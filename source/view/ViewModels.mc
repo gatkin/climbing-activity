@@ -43,26 +43,26 @@ module ClimbingView
 
     class CompletedSessionViewModel
     {
-        private var date;
+        private var title;
         private var duration;
         private var successfulClimbCount;
         private var failedClimbCount;
 
         function initialize(
-            dateOfSession,
+            titleOfSession,
             sessionDuration,
             numSuccessClimbs,
             numFailedClimbs
         )
         {
-            date = dateOfSession;
+            title = titleOfSession;
             duration = sessionDuration;
             successfulClimbCount = numSuccessClimbs;
             failedClimbCount = numFailedClimbs;
         }
 
-        function getDate() {
-            return self.date;
+        function getAttemptedClimbCount() {
+            return self.successfulClimbCount + self.failedClimbCount;
         }
 
         function getDuration() {
@@ -76,14 +76,18 @@ module ClimbingView
         function getSuccessfulClimbCount() {
             return self.failedClimbCount;
         }
+
+        function getTitle() {
+            return self.title;
+        }
     }
 
     function completedSessionToViewModel(session) {
-        var date = formatMoment(session.getStartTime());
+        var sessionTitle = formatMoment(session.getStartTime());
         var duration = formatDuration(session.getDuration());
         
         return new CompletedSessionViewModel(
-            date,
+            sessionTitle,
             duration,
             session.getFailedClimbCount(),
             session.getSuccessfulClimbCount()

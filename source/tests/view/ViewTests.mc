@@ -88,15 +88,20 @@ module ClimbingView
         var viewModel = completedSessionToViewModel(session);
 
         // Assert
-        var expectedDate = "2019-3-2";
-        var actualDate = viewModel.getDate();
-        logger.debug("date: " + expectedDate + " == " + actualDate);
-        Test.assertEqual(expectedDate, actualDate);
+        var expectedTitle = "2019-3-2";
+        var actualTitle = viewModel.getTitle();
+        logger.debug("title: " + expectedTitle + " == " + actualTitle);
+        Test.assertEqual(expectedTitle, actualTitle);
 
         var expectedDuration = "01:35";
         var actualDuration = viewModel.getDuration();
         logger.debug("duration: " + expectedDuration + " == " + actualDuration);
         Test.assertEqual(expectedDuration, actualDuration);
+
+        var expectedAttemptedClimbs = 3;
+        var actualAttemptedClimbs = viewModel.getAttemptedClimbCount();
+        logger.debug("attempted climbs: " + expectedAttemptedClimbs + " == " + actualAttemptedClimbs);
+        Test.assertEqual(expectedAttemptedClimbs, actualAttemptedClimbs);
 
         var expectedSuccessfulClimbs = 2;
         var actualSuccessfulClimbs = viewModel.getSuccessfulClimbCount();
