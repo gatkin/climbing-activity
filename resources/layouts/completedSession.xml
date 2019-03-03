@@ -6,7 +6,6 @@
         id="session_title"
         x="center"
         y="30"
-        text="2-21-2019"
         color="Graphics.COLOR_BLACK"
         font="Gfx.FONT_MEDIUM"
         justification="Graphics.TEXT_JUSTIFY_CENTER"
@@ -26,7 +25,6 @@
         id="session_duration"
         x="190"
         y="90"
-        text="31:40"
         color="Graphics.COLOR_BLACK"
         font="Gfx.FONT_XTINY"
         justification="Graphics.TEXT_JUSTIFY_LEFT"
@@ -45,7 +43,6 @@
         id="climbs_attempted"
         x="190"
         y="115"
-        text="23"
         color="Graphics.COLOR_BLACK"
         font="Gfx.FONT_XTINY"
         justification="Graphics.TEXT_JUSTIFY_LEFT"
@@ -64,13 +61,12 @@
         id="climbs_completed"
         x="190"
         y="140"
-        text="17"
         color="Graphics.COLOR_BLACK"
         font="Gfx.FONT_XTINY"
         justification="Graphics.TEXT_JUSTIFY_LEFT"
     />
 
-    <!-- Faild Climbs -->
+    <!-- Failed Climbs -->
     <label
         x="20"
         y="165"
@@ -83,7 +79,6 @@
         id="climbs_failed"
         x="190"
         y="165"
-        text="6"
         color="Graphics.COLOR_BLACK"
         font="Gfx.FONT_XTINY"
         justification="Graphics.TEXT_JUSTIFY_LEFT"

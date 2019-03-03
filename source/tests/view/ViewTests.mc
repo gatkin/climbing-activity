@@ -98,17 +98,17 @@ module ClimbingView
         logger.debug("duration: " + expectedDuration + " == " + actualDuration);
         Test.assertEqual(expectedDuration, actualDuration);
 
-        var expectedAttemptedClimbs = 3;
+        var expectedAttemptedClimbs = "3";
         var actualAttemptedClimbs = viewModel.getAttemptedClimbCount();
         logger.debug("attempted climbs: " + expectedAttemptedClimbs + " == " + actualAttemptedClimbs);
         Test.assertEqual(expectedAttemptedClimbs, actualAttemptedClimbs);
 
-        var expectedSuccessfulClimbs = 2;
+        var expectedSuccessfulClimbs = "2";
         var actualSuccessfulClimbs = viewModel.getSuccessfulClimbCount();
         logger.debug("successful climbs: " + expectedSuccessfulClimbs + " == " + actualSuccessfulClimbs);
         Test.assertEqual(expectedSuccessfulClimbs, actualSuccessfulClimbs);
 
-        var expectedFailedClimbs = 1;
+        var expectedFailedClimbs = "1";
         var actualFailedClimbs = viewModel.getFailedClimbCount();
         logger.debug("failed climbs: " + expectedFailedClimbs + " == " + actualFailedClimbs);
         Test.assertEqual(expectedFailedClimbs, actualFailedClimbs);

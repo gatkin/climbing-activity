@@ -45,6 +45,7 @@ module ClimbingView
     {
         private var title;
         private var duration;
+        private var attemptedClimbCount;
         private var successfulClimbCount;
         private var failedClimbCount;
 
@@ -57,12 +58,13 @@ module ClimbingView
         {
             title = titleOfSession;
             duration = sessionDuration;
+            attemptedClimbCount = (numSuccessClimbs + numFailedClimbs).toString();
             successfulClimbCount = numSuccessClimbs;
             failedClimbCount = numFailedClimbs;
         }
 
         function getAttemptedClimbCount() {
-            return self.successfulClimbCount + self.failedClimbCount;
+            return self.attemptedClimbCount;
         }
 
         function getDuration() {
@@ -70,11 +72,11 @@ module ClimbingView
         }
 
         function getFailedClimbCount() {
-            return self.successfulClimbCount;
+            return self.successfulClimbCount.toString();
         }
 
         function getSuccessfulClimbCount() {
-            return self.failedClimbCount;
+            return self.failedClimbCount.toString();
         }
 
         function getTitle() {

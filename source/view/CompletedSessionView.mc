@@ -13,7 +13,9 @@ module ClimbingView
         function initialize(completedSession) {
             BehaviorDelegate.initialize();
             session = completedSession;
-            view = new CompletedSessionView();
+            view = new CompletedSessionView(
+                completedSessionToViewModel(session)
+            );
         }
 
         function getView() {
@@ -23,8 +25,11 @@ module ClimbingView
 
     class CompletedSessionView extends WatchUi.View
     {
-        function initialize() {
+        private var model;
+
+        function initialize(sessionModel) {
             View.initialize();
+            model = sessionModel;
         }
 
         function onLayout(dc) {
@@ -35,6 +40,21 @@ module ClimbingView
         }
 
         function onUpdate(dc) {
+            View.findDrawableById("session_title")
+                .setText(self.model.getTitle());
+            
+            View.findDrawableById("session_duration")
+                .setText(self.model.getDuration());
+            
+            View.findDrawableById("climbs_attempted")
+                .setText(self.model.getAttemptedClimbCount());
+
+            View.findDrawableById("climbs_completed")
+                .setText(self.model.getSuccessfulClimbCount());
+
+            View.findDrawableById("climbs_failed")
+                .setText(self.model.getFailedClimbCount());
+
             View.onUpdate(dc);
         }
 
