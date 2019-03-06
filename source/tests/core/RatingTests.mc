@@ -5,19 +5,7 @@ module ClimbingCore
 {
     (:test)
     function boulderRating_UsesVScale(logger) {
-        var test_cases = [
-            {:value => :V0, :display => "V0"},
-            {:value => :V1, :display => "V1"},
-            {:value => :V2, :display => "V2"},
-            {:value => :V3, :display => "V3"},
-            {:value => :V4, :display => "V4"},
-            {:value => :V5, :display => "V5"},
-            {:value => :V6, :display => "V6"},
-            {:value => :V7, :display => "V7"},
-            {:value => :V8, :display => "V8"},
-            {:value => :V9, :display => "V9"},
-            {:value => :V10, :display => "V10"},
-        ];
+        var test_cases = getBoulderRatingPairs();
 
         for(var i = 0; i < test_cases.size(); i++) {
             var test_case = test_cases[i];
@@ -38,24 +26,24 @@ module ClimbingCore
     }
 
     (:test)
+    function boulderRatingFromText_ConvertsBoulderRating(logger) {
+        var test_cases = getBoulderRatingPairs();
+
+        for(var i = 0; i < test_cases.size(); i++) {
+            var test_case = test_cases[i];
+
+            var text = test_case[:display];
+            logger.debug("Rating for " + text);
+            var rating = BoulderRating.fromText(text);
+            Test.assertEqual(test_case[:value], rating.getRating());
+        }
+
+        return true;
+    }
+
+    (:test)
     function ropedClimbRating_UsesYosemiteDecimalScale(logger) {
-        // The "Y" prefix on the symbols is necessary because symbols cannot start with numbers.
-        // The "Y" stands for "Yosemite decimal scale".
-        var test_cases = [
-            {:value => :Y56, :display => "5.6"},
-            {:value => :Y57, :display => "5.7"},
-            {:value => :Y58, :display => "5.8"},
-            {:value => :Y59, :display => "5.9"},
-            {:value => :Y510A, :display => "5.10A"},
-            {:value => :Y510B, :display => "5.10B"},
-            {:value => :Y510C, :display => "5.10C"},
-            {:value => :Y510D, :display => "5.10D"},
-            {:value => :Y511A, :display => "5.11A"},
-            {:value => :Y511B, :display => "5.11B"},
-            {:value => :Y511C, :display => "5.11C"},
-            {:value => :Y511D, :display => "5.11D"},
-            {:value => :Y512A, :display => "5.12A"},
-        ];
+        var test_cases = getRopedClimbRatingPairs();
 
         for(var i = 0; i < test_cases.size(); i++) {
             var test_case = test_cases[i];
@@ -73,5 +61,57 @@ module ClimbingCore
         }
 
         return true;
+    }
+
+    (:test)
+    function ropedClimbRatingFromText_ConvertsRopedClimbRating(logger) {
+        var test_cases = getRopedClimbRatingPairs();
+
+        for(var i = 0; i < test_cases.size(); i++) {
+            var test_case = test_cases[i];
+
+            var text = test_case[:display];
+            logger.debug("Rating for " + text);
+            var rating = RopedClimbRating.fromText(text);
+            Test.assertEqual(test_case[:value], rating.getRating());
+        }
+
+        return true;
+    }
+
+    function getBoulderRatingPairs() {
+        return [
+            {:value => :V0, :display => "V0"},
+            {:value => :V1, :display => "V1"},
+            {:value => :V2, :display => "V2"},
+            {:value => :V3, :display => "V3"},
+            {:value => :V4, :display => "V4"},
+            {:value => :V5, :display => "V5"},
+            {:value => :V6, :display => "V6"},
+            {:value => :V7, :display => "V7"},
+            {:value => :V8, :display => "V8"},
+            {:value => :V9, :display => "V9"},
+            {:value => :V10, :display => "V10"},
+        ];
+    }
+
+    function getRopedClimbRatingPairs() {
+        // The "Y" prefix on the symbols is necessary because symbols cannot start with numbers.
+        // The "Y" stands for "Yosemite decimal scale".
+        return [
+            {:value => :Y56, :display => "5.6"},
+            {:value => :Y57, :display => "5.7"},
+            {:value => :Y58, :display => "5.8"},
+            {:value => :Y59, :display => "5.9"},
+            {:value => :Y510A, :display => "5.10A"},
+            {:value => :Y510B, :display => "5.10B"},
+            {:value => :Y510C, :display => "5.10C"},
+            {:value => :Y510D, :display => "5.10D"},
+            {:value => :Y511A, :display => "5.11A"},
+            {:value => :Y511B, :display => "5.11B"},
+            {:value => :Y511C, :display => "5.11C"},
+            {:value => :Y511D, :display => "5.11D"},
+            {:value => :Y512A, :display => "5.12A"},
+        ];
     }
 }

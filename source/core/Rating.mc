@@ -14,8 +14,48 @@ module ClimbingCore
             rating = value;
         }
 
+        // Create a new BoulderRating from the rating text.
+        static function fromText(text) {
+            var mapping = {
+                "V0" => :V0,
+                "V1" => :V1,
+                "V2" => :V2,
+                "V3" => :V3,
+                "V4" => :V4,
+                "V5" => :V5,
+                "V6" => :V6,
+                "V7" => :V7,
+                "V8" => :V8,
+                "V9" => :V9,
+                "V10" => :V10,
+            };
+
+            var rating = mapping.get(text);
+            if(rating == null) {
+                rating = :V0;
+            }
+
+            return new BoulderRating(rating);
+        }
+
+        function equals(other) {
+            if(other == null) {
+                return false;
+            }
+
+            if(!(other instanceof BoulderRating)) {
+                return false;
+            }
+
+            return nullableEquals(self.getRating(), other.getRating());
+        }
+
         function getClimbType() {
             return CLIMB_TYPE_BOULDERING;
+        }
+
+        function getRating() {
+            return self.rating;
         }
 
         function getText() {
@@ -31,8 +71,50 @@ module ClimbingCore
             rating = value;
         }
 
+        // Create a new RopedClimbRating from the rating text.
+        static function fromText(text) {
+            var mapping = {
+                "5.6" => :Y56,
+                "5.7" => :Y57,
+                "5.8" => :Y58,
+                "5.9" => :Y59,
+                "5.10A" => :Y510A,
+                "5.10B" => :Y510B,
+                "5.10C" => :Y510C,
+                "5.10D" => :Y510D,
+                "5.11A" => :Y511A,
+                "5.11B" => :Y511B,
+                "5.11C" => :Y511C,
+                "5.11D" => :Y511D,
+                "5.12A" => :Y512A,
+            };
+
+            var rating = mapping.get(text);
+            if(rating == null) {
+                rating = :Y56;
+            }
+
+            return new RopedClimbRating(rating);
+        }
+
+        function equals(other) {
+            if(other == null) {
+                return false;
+            }
+
+            if(!(other instanceof RopedClimbRating)) {
+                return false;
+            }
+
+            return nullableEquals(self.getRating(), other.getRating());
+        }
+
         function getClimbType() {
             return CLIMB_TYPE_ROPED_CLIMB;
+        }
+
+        function getRating() {
+            return self.rating;
         }
 
         function getText() {
