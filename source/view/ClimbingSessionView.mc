@@ -138,17 +138,17 @@ module ClimbingView
 
         // Update the view
         function onUpdate(dc) {
-            var totalDuration = formatDuration(sessionViewModel.getDuration());
-            View.findDrawableById("total_time_text").setText(totalDuration);
+            View.findDrawableById("total_time_text")
+                .setText(sessionViewModel.getDuration());
 
-            var restDuration = formatDuration(sessionViewModel.getRestTime());
-            View.findDrawableById("rest_time_text").setText(restDuration);
+            View.findDrawableById("rest_time_text")
+                .setText(sessionViewModel.getRestTime());
 
-            var climbsAttempted = sessionViewModel.getTotalClimbs().toString();
-            View.findDrawableById("climbs_attempted_text").setText(climbsAttempted);
+            View.findDrawableById("climbs_attempted_text")
+                .setText(sessionViewModel.getTotalClimbs());
 
-            var climbsSuccessful = sessionViewModel.getSuccessfulClimbs().toString();
-            View.findDrawableById("climbs_successful_text").setText(climbsSuccessful);
+            View.findDrawableById("climbs_successful_text")
+                .setText(sessionViewModel.getSuccessfulClimbs());
 
             // Call the parent onUpdate function to redraw the layout
             View.onUpdate(dc);

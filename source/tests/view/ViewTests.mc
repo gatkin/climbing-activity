@@ -37,7 +37,7 @@ module ClimbingView
         Core.completeSuccessfulClimb(session);
         Core.completeFailedClimb(session);
         
-        var duration = new Time.Duration(60);
+        var duration = new Time.Duration(125);
         var currentTime = session.getStartTime().add(duration);
         
         // Act
@@ -45,20 +45,25 @@ module ClimbingView
         var viewModel = sessionToViewModel(session, currentTime);
         
         // Assert
-        logger.debug("correct duration");
-        Core.assertDurationsAreEqual(duration, viewModel.getDuration());
+        var expectedDuration = "02:05";
+        var actualDuration = viewModel.getDuration();
+        logger.debug("duration: " + expectedDuration + " == " + actualDuration);
+        Test.assertEqual(expectedDuration, actualDuration);
         
+        var expectedTotalClimbs = "2";
         var actualTotalClimbs = viewModel.getTotalClimbs();
-        logger.debug("correct total climbs: 2 == " + actualTotalClimbs);
-        Test.assertEqual(2, actualTotalClimbs);
+        logger.debug("total climbs: " + expectedTotalClimbs + " == " + actualTotalClimbs);
+        Test.assertEqual(expectedTotalClimbs, actualTotalClimbs);
         
+        var expectedSuccessfulClimbs = "1";
         var actualSuccessfulClimbs = viewModel.getSuccessfulClimbs();
-        logger.debug("correct successulf climbs: 1 == " +  actualSuccessfulClimbs);
-        Test.assertEqual(1, actualSuccessfulClimbs);
+        logger.debug("successful climbs: " + expectedTotalClimbs + " == " +  actualSuccessfulClimbs);
+        Test.assertEqual(expectedSuccessfulClimbs, actualSuccessfulClimbs);
 
-        logger.debug("correct rest time");
-        var expectedRestTime = session.getCurrentRestTime(currentTime);
-        Core.assertDurationsAreEqual(expectedRestTime, viewModel.getRestTime());
+        var expectedRestTime = formatDuration(session.getCurrentRestTime(currentTime));
+        var actualRestTime = viewModel.getRestTime();
+        logger.debug("rest time: " + expectedRestTime + " == " + actualRestTime);
+        Test.assertEqual(expectedRestTime, actualRestTime);
         
         return true;
     }

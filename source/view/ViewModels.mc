@@ -130,10 +130,10 @@ module ClimbingView
         var elapsedDuration = currentTime.subtract(climbingSession.getStartTime());
         
         return new SessionViewModel(
-            elapsedDuration,
-            climbingSession.getCurrentRestTime(currentTime),
-            climbingSession.getNumberOfCompletedClimbs(),
-            climbingSession.getNumberOfSuccessfulClimbs()
+            formatDuration(elapsedDuration),
+            formatDuration(climbingSession.getCurrentRestTime(currentTime)),
+            climbingSession.getNumberOfCompletedClimbs().toString(),
+            climbingSession.getNumberOfSuccessfulClimbs().toString()
         );
     }
 }
