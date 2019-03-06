@@ -54,6 +54,23 @@ module ClimbingCore
             success = successful;
         }
 
+        function equals(other) {
+            if(other == null) {
+                return false;
+            }
+
+            if(!(other instanceof CompletedClimb)) {
+                return false;
+            }
+
+            return nullableEquals(self.id, other.getId()) &&
+                momentsAreEqual(self.startTime, other.getStartTime()) &&
+                momentsAreEqual(self.endTime, other.getEndTime()) &&
+                nullableEquals(self.rating, other.getRating()) &&
+                nullableEquals(self.success, other.wasSuccessful());
+
+        }
+
         function getClimbType() {
             return self.rating.getClimbType();
         }
@@ -72,6 +89,10 @@ module ClimbingCore
 
         function getRating() {
             return self.rating;
+        }
+
+        function getStartTime() {
+            return self.startTime;
         }
 
         function wasSuccessful() {

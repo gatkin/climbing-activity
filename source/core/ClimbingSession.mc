@@ -134,6 +134,27 @@ module ClimbingCore
             setClimbCounts(climbs);
         }
 
+        function equals(other) {
+            if(other == null) {
+                return false;
+            }
+
+            if(!(other instanceof CompletedClimbingSession)) {
+                return false;
+            }
+
+            var equal = nullableEquals(self.id, other.getId()) &&
+                momentsAreEqual(self.startTime, other.getStartTime()) &&
+                momentsAreEqual(self.endTime, other.getEndTime()) &&
+                self.climbs.size() == other.getClimbs().size();
+
+            for(var i = 0; equal && i < self.climbs.size(); i++) {
+                equal = equal && self.climbs[i].equals(other.getClimbs()[i]);
+            }
+
+            return equal;
+        }
+
         function getClimbs() {
             return self.climbs;
         }
