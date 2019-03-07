@@ -1,15 +1,13 @@
 using Toybox.Application;
 using Toybox.System;
 using Toybox.WatchUi;
-using ClimbingView;
+using ClimbingView as View;
+
 
 class ClimbingActivityApp extends Application.AppBase
 {
-    private var sessionController;
-
     function initialize() {
         AppBase.initialize();
-        sessionController = new ClimbingView.ClimbingSessionController();
     }
 
     // onStart() is called on application start up
@@ -22,6 +20,6 @@ class ClimbingActivityApp extends Application.AppBase
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ sessionController.getView(), sessionController ];
+        return [ new View.MainView(), new View.MainViewDelegate() ];
     }
 }

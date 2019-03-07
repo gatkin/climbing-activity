@@ -1,0 +1,11 @@
+<layout id="Main">
+    <drawable id="black_background" />
+    <label
+        x="center"
+        y="center"
+        text="Press Any Key"
+        color="Graphics.COLOR_WHITE"
+        font="Gfx.FONT_LARGE"
+        justification="Graphics.TEXT_JUSTIFY_CENTER"
+    />
+</layout>

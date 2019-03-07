@@ -1,0 +1,4 @@
+<menu id="Main" title="Climbing">
+    <menu-item id="StartSession" label="Start Session" />
+    <menu-item id="ViewHistory" label="View History" />
+</menu>
