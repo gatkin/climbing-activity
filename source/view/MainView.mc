@@ -51,6 +51,9 @@ module ClimbingView
         }
 
         function onMenuItem(selectedItem) {
+            // Remove the main view with the image from the view stack to save memory.
+            WatchUi.popView(WatchUi.SLIDE_UP);
+
             var controller = new ClimbingSessionController();
             WatchUi.pushView(
                 controller.getView(),
