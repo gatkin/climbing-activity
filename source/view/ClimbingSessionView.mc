@@ -2,6 +2,7 @@ using Toybox.Time;
 using Toybox.Timer;
 using Toybox.WatchUi;
 using ClimbingCore as Core;
+using ClimbingCore.Storage as Storage;
 
 module ClimbingView
 {
@@ -48,9 +49,11 @@ module ClimbingView
                 return;
             }
 
-            var completedSessionController = new CompletedSessionController(
-                self.climbingSession.complete(Time.now())
-            );
+            // Save completed session to storage.
+            var completedSession = self.climbingSession.complete(Time.now());
+            Storage.getSessionAccessor().saveCompletedSession(completedSession);
+
+            var completedSessionController = new CompletedSessionController(completedSession);
 
             WatchUi.switchToView(
                 completedSessionController.getView(),
