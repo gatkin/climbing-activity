@@ -7,6 +7,10 @@ module ClimbingCore
 {
 module Storage
 {
+    // Maximum number of sessions that can be kept in storage. The number of sessions
+    // is limited to avoid exceeding storage limits.
+    const MAX_STORED_SESSIONS = 30;
+
     // Keys to be used for dictionaries persisted to storage.
     enum {
         RATING_TEXT,
@@ -23,7 +27,7 @@ module Storage
     }
 
     function getSessionAccessor() {
-        return new SessionAccessor();
+        return new SessionAccessor(MAX_STORED_SESSIONS);
     }
 
     // Convert a dictionary that bas been persisted to storage to a completed climb.
@@ -108,8 +112,12 @@ module Storage
     // Persists session data to storage.
     class SessionAccessor
     {
-        function initialize() {
+        // Maximum number of sessions that can be kept in storage. The number of sessions
+        // is limited to avoid exceeding storage limits.
+        private var maxStoredSessions;
 
+        function initialize(maxAllowedSessions) {
+            maxStoredSessions = maxAllowedSessions;
         }
 
         // Delete all persisted session data.
@@ -139,6 +147,13 @@ module Storage
             var sessionList = Storage.getValue(self.getStorageKey());
             if(sessionList == null) {
                 sessionList = new [0];
+            }
+
+            if(sessionList.size() == self.maxStoredSessions) {
+                // Drop the oldest stored session if we are at the limit. Since
+                // sessions are persisted in the order that they were saved, the
+                // oldest session will be at the front of the list
+                sessionList = sessionList.slice(1, null);
             }
 
             sessionList.add(sessionToDict(session));

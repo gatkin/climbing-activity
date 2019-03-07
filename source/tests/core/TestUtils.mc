@@ -55,7 +55,10 @@ module ClimbingCore
     }
 
     function createCompletedSession() {
-        var id = 1;
+        return createCompletedSessionWithId(1);
+    }
+
+    function createCompletedSessionWithId(id) {
         var startTime = new Time.Moment(1551568192);
         var duration = new Time.Duration(95);
         var endTime = startTime.add(duration);

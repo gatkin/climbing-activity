@@ -131,10 +131,49 @@ module Storage
         return true;
     }
 
+    (:test)
+    function saveCompletedSession_DropsOldestSessionWhenLimitIsReached(logger) {
+        // Arrange
+        var maxSessions = 2;
+        var accessor = createSessionAccessorWithLimit(maxSessions);
+        var sessions = [
+            Core.createCompletedSessionWithId(1), // Oldest one should be dropped
+            Core.createCompletedSessionWithId(2),
+            Core.createCompletedSessionWithId(3),
+        ];
+
+        // Act
+        logger.debug("Save all sessions");
+        saveAllSessions(accessor, sessions);
+
+        // Assert
+        var actualSessions = accessor.getSessions();
+        logger.debug(maxSessions + " == " + actualSessions.size());
+        Test.assertEqual(maxSessions, actualSessions.size());
+
+        logger.debug("first session");
+        Test.assertEqual(sessions[1], actualSessions[0]);
+
+        logger.debug("first session");
+        Test.assertEqual(sessions[2], actualSessions[1]);
+
+        return true;
+    }
+
     function createSessionAccessor() {
-        var accessor = new SessionAccessor();
+        return createSessionAccessorWithLimit(MAX_STORED_SESSIONS);
+    }
+
+    function createSessionAccessorWithLimit(limit) {
+        var accessor = new SessionAccessor(limit);
         accessor.deleteAllSessionData();
         return accessor;
+    }
+
+    function saveAllSessions(accessor, sessions) {
+        for(var i = 0; i < sessions.size(); i++) {
+            accessor.saveCompletedSession(sessions[i]);
+        }
     }
 }
 }
