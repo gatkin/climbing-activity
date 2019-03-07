@@ -22,28 +22,8 @@ module Storage
         SESSION_CLIMBS,
     }
 
-    // Persists session data to storage.
-    class SessionAccessor
-    {
-        function initialize() {
-
-        }
-
-        // Get the key used to store an array of all completed sessions in storage.
-        function getStorageKey() {
-            return "sessions";
-        }
-
-        // Persists a completed session to storage.
-        function saveCompletedSession(session) {
-            var sessionList = Storage.getValue(self.getStorageKey());
-            if(sessionList == null) {
-                sessionList = new [0];
-            }
-
-            sessionList.add(sessionToDict(session));
-            Storage.setValue(self.getStorageKey(), sessionList);
-        }
+    function getSessionAccessor() {
+        return new SessionAccessor();
     }
 
     // Convert a dictionary that bas been persisted to storage to a completed climb.
@@ -123,6 +103,47 @@ module Storage
 
             SESSION_CLIMBS => dictClimbs,
         };
+    }
+
+    // Persists session data to storage.
+    class SessionAccessor
+    {
+        function initialize() {
+
+        }
+
+        // Delete all persisted session data.
+        function deleteAllSessionData() {
+            Storage.deleteValue(self.getStorageKey());
+        }
+
+        // Get all sessions that have been persisted to storage.
+        function getSessions() {
+            var sessionDicts = Storage.getValue(self.getStorageKey());
+            var sessions = new [sessionDicts.size()];
+
+            for(var i = 0; i < sessionDicts.size(); i++) {
+                sessions[i] = sessionFromDict(sessionDicts[i]);
+            }
+
+            return sessions;
+        }
+
+        // Get the key used to store an array of all completed sessions in storage.
+        function getStorageKey() {
+            return "sessions";
+        }
+
+        // Persists a completed session to storage.
+        function saveCompletedSession(session) {
+            var sessionList = Storage.getValue(self.getStorageKey());
+            if(sessionList == null) {
+                sessionList = new [0];
+            }
+
+            sessionList.add(sessionToDict(session));
+            Storage.setValue(self.getStorageKey(), sessionList);
+        }
     }
 }
 }

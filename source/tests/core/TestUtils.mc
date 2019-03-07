@@ -79,6 +79,45 @@ module ClimbingCore
         return createClimb(false);
     }
 
+    function createMultipleCompletedSessions() {
+        var idA = 1;
+        var startTimeA = new Time.Moment(1551568192);
+        var durationA = new Time.Duration(95);
+        var endTimeA = startTimeA.add(durationA);
+        var climbsA = [
+            createSuccessfulClimb(),
+            createFailedClimb(),
+            createSuccessfulClimb()
+        ];
+
+        var sessionA = new CompletedClimbingSession(
+            idA,
+            startTimeA,
+            endTimeA,
+            climbsA
+        );
+
+        var idB = 2;
+        var startTimeB = new Time.Moment(1551923105);
+        var durationB = new Time.Duration(235);
+        var endTimeB = startTimeB.add(durationB);
+        var climbsB = [
+            createFailedClimb(),
+            createSuccessfulClimb(),
+            createSuccessfulClimb(),
+            createSuccessfulClimb(),
+        ];
+
+        var sessionB = new CompletedClimbingSession(
+            idB,
+            startTimeB,
+            endTimeB,
+            climbsB
+        );
+
+        return [sessionA, sessionB];
+    }
+
     function createRopedClimbRating() {
         return new RopedClimbRating(:Y57);
     }

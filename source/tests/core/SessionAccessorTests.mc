@@ -98,13 +98,43 @@ module Storage
         // Assert
         logger.debug("data is persisted");
         var actualSessions = Storage.getValue(accessor.getStorageKey()); 
+        logger.debug("1 == " + actualSessions.size());
         Test.assertEqual(1, actualSessions.size());
 
         return true;
     }
 
+    (:test)
+    function saveCompletedSession_PersistsMultipleSessions(logger) {
+        // Arrange
+        var accessor = createSessionAccessor();
+        var sessions = Core.createMultipleCompletedSessions();
+
+        // Act
+        logger.debug("save sessions");
+        accessor.saveCompletedSession(sessions[0]);
+        accessor.saveCompletedSession(sessions[1]);
+
+        // Assert
+        logger.debug("All session data is returned");
+        var actualSessions = accessor.getSessions();
+
+        logger.debug("2 == " + actualSessions.size());
+        Test.assertEqual(2, actualSessions.size());
+
+        logger.debug("sessions[0]");
+        Test.assertEqual(sessions[0], actualSessions[0]);
+
+        logger.debug("sessions[1]");
+        Test.assertEqual(sessions[1], actualSessions[1]);
+
+        return true;
+    }
+
     function createSessionAccessor() {
-        return new SessionAccessor();
+        var accessor = new SessionAccessor();
+        accessor.deleteAllSessionData();
+        return accessor;
     }
 }
 }
