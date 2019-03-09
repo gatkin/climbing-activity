@@ -1,5 +1,7 @@
 using Toybox.Time;
 using Toybox.Time.Gregorian;
+using Toybox.WatchUi;
+using ClimbingCore as Core;
 
 
 module ClimbingView
@@ -84,6 +86,45 @@ module ClimbingView
         }
     }
 
+    // Represents the data for the climbing session history view.
+    class HistoryViewModel
+    {
+        private var title;
+        private var menuItems;
+
+        // Initialize a new HistoryViewModel.
+        // viewTitle - Menu title.
+        // viewMenuItems - Items in the menu
+        function initialize(viewTitle, viewMenuItems) {
+            title = viewTitle;
+            menuItems = viewMenuItems;
+        }
+
+        function getMenuItems() {
+            return self.menuItems;
+        }
+
+        function getTitle() {
+            return self.title;
+        }
+    }
+
+    // Convert a completed session to a menu item that can be displayed in the
+    // history view.
+    function completedSessionToMenuItem(session) {
+        var label = formatMoment(session.getStartTime());
+        var subLabel = session.getTotalClimbCount().toString() + " Climbs";
+        var identifier = session.getId();
+
+        return new WatchUi.MenuItem(
+            label,
+            subLabel,
+            identifier,
+            {}
+        );
+    }
+
+    // Convert a CompletedSession object into a view model for the completed session view.
     function completedSessionToViewModel(session) {
         var sessionTitle = formatMoment(session.getStartTime());
         var duration = formatDuration(session.getDuration());
@@ -96,6 +137,7 @@ module ClimbingView
         );
     }
     
+    // Format a Duration object.
     function formatDuration(duration) {
         var timeField1;
         var timeField2;
@@ -125,7 +167,23 @@ module ClimbingView
         var date = Gregorian.info(moment, Time.FORMAT_SHORT);
         return date.year.toString() + "-" + date.month.toString() + "-" + date.day.toString();
     }
+
+    // Convert session history data into a session history view model.
+    // sessions - Array of completed sessions ordered from oldest to most recent.
+    function sessionHistoryToViewModel(sessions) {
+        var menuItems = new [sessions.size()];
+        
+        // We want the menu items to appear in the order of the most recent session
+        // to the oldest session which is the revers order from the input.
+        for(var i = 0; i < menuItems.size(); i++) {
+            var sessionIndex = (menuItems.size() - 1) - i;
+            menuItems[i] = completedSessionToMenuItem(sessions[sessionIndex]);
+        }
+
+        return new HistoryViewModel("History", menuItems);
+    }
     
+    // Convert an active session to a view model for the active session view.
     function sessionToViewModel(climbingSession, currentTime) {
         var elapsedDuration = currentTime.subtract(climbingSession.getStartTime());
         

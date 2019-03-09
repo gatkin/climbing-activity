@@ -183,6 +183,10 @@ module ClimbingCore
             return self.successfulClimbCount;
         }
 
+        function getTotalClimbCount() {
+            return self.climbs.size();
+        }
+
         private function setClimbCounts(climbs) {
             self.successfulClimbCount = 0;
             self.failedClimbCount = 0;

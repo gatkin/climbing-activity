@@ -120,4 +120,76 @@ module ClimbingView
 
         return true;
     }
+
+    (:test)
+    function sessionHistoryToViewModel_CreatesAHistoryViewModel(logger) {
+        // Arrange
+        logger.debug("Create old session");
+        var oldSessionStartTime = new Time.Moment(1551568192);
+        var oldSessionClimbCount = 4;
+        var oldSession = Core.createCompletedSessionWithStartTimeAndClimbCount(
+                oldSessionStartTime,
+                oldSessionClimbCount
+            );
+
+        logger.debug("Create new session");
+        var newSessionStartTime = new Time.Moment(1552147264);
+        var newSessionClimbCount = 10;
+        var newSession = Core.createCompletedSessionWithStartTimeAndClimbCount(
+                newSessionStartTime,
+                newSessionClimbCount
+            );
+
+        var sessions = [oldSession, newSession];
+
+        // Act
+        logger.debug("Convert to view model");
+        var viewModel = sessionHistoryToViewModel(sessions);
+
+        // Assert
+        logger.debug("Title");
+        Test.assertEqual("History", viewModel.getTitle());
+
+        logger.debug("Get menu items");
+        var menuItems = viewModel.getMenuItems();
+        
+        var expectedCount = sessions.size();
+        var actualCount = menuItems.size();
+        logger.debug("size: " + expectedCount + " == " + actualCount);
+        Test.assertEqual(expectedCount, actualCount);
+
+        logger.debug("First menu item");
+        assertMenuItemMatches(
+            logger,
+            newSession.getId(),
+            "2019-3-9",
+            "10 Climbs",
+            menuItems[0]
+        );
+
+        logger.debug("Second menu item");
+        assertMenuItemMatches(
+            logger,
+            oldSession.getId(),
+            "2019-3-2",
+            "4 Climbs",
+            menuItems[1]
+        );
+
+        return true;
+    }
+
+    function assertMenuItemMatches(logger, id, label, subLabel, actualItem) {
+        var actualId =  actualItem.getId();
+        logger.debug("id: " + id + " == " + actualId);
+        Test.assertEqual(id, actualId);
+
+        var actualLabel = actualItem.getLabel();
+        logger.debug("label: " + label + " == " + actualLabel);
+        Test.assertEqual(label, actualLabel);
+
+        var actualSubLabel = actualItem.getSubLabel();
+        logger.debug("subLabel: " + subLabel + " == " + actualSubLabel);
+        Test.assertEqual(subLabel, actualSubLabel);
+    }
 }

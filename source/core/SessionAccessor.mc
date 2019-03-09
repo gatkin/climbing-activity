@@ -125,7 +125,8 @@ module Storage
             Storage.deleteValue(self.getStorageKey());
         }
 
-        // Get all sessions that have been persisted to storage.
+        // Get all sessions that have been persisted to storage. Returns sessions
+        // in the order from oldest to newest.
         function getSessions() {
             var sessionDicts = Storage.getValue(self.getStorageKey());
             var sessions = new [sessionDicts.size()];

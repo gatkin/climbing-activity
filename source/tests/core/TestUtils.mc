@@ -78,6 +78,29 @@ module ClimbingCore
         return session;
     }
 
+    function createCompletedSessionWithStartTimeAndClimbCount(
+        startTime,
+        climbCount
+    )
+    {
+        var duration = new Time.Duration(90);
+        var endTime = startTime.add(duration);
+        
+        var climbs = new [climbCount];
+        for(var i = 0; i < climbCount; i++) {
+            climbs[i] = createSuccessfulClimb();
+        }
+
+        var session = new CompletedClimbingSession(
+            startTime.value(),
+            startTime,
+            endTime,
+            climbs
+        );
+
+        return session;
+    }
+
     function createFailedClimb() {
         return createClimb(false);
     }
