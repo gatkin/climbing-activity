@@ -1,6 +1,5 @@
 using Toybox.WatchUi;
-using ClimbingView;
-
+using ClimbingCore.Storage as Storage;
 
 module ClimbingView
 {
@@ -72,8 +71,29 @@ module ClimbingView
         function onMenuItem(selectedItem) {
             // Remove the main view with the image from the view stack to save memory.
             WatchUi.popView(WatchUi.SLIDE_UP);
+            
+            if(selectedItem == :ViewHistory) {
+                openHistoryView();
+            } else {
+                openActiveSessionView();
+            }
+        }
 
+        private function openActiveSessionView() {
             var controller = new ClimbingSessionController();
+            WatchUi.pushView(
+                controller.getView(),
+                controller,
+                WatchUi.SLIDE_UP
+            );
+        }
+
+        private function openHistoryView() {
+            var sessionAccessor = Storage.getSessionAccessor();
+            var sessions = sessionAccessor.getSessions();
+            var historyViewModel = sessionHistoryToViewModel(sessions);
+            var controller = new HistoryController(historyViewModel);
+
             WatchUi.pushView(
                 controller.getView(),
                 controller,
