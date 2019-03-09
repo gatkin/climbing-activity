@@ -30,17 +30,36 @@ module ClimbingView
         function onKey(keyEvent) {
             var key = keyEvent.getKey();
             if(key == WatchUi.KEY_ESC) {
-                // Let the user exit the app.
-                WatchUi.popView(WatchUi.SLIDE_LEFT);
+                onEscape();
             } else {
-                WatchUi.pushView(
-                    new Rez.Menus.Main(),
-                    new MainMenuDelegate(),
-                    WatchUi.SLIDE_UP
-                );
+                onContinue();
             }
 
             return true;
+        }
+
+        function onSwipe(swipeEvent) {
+            var direction = swipeEvent.getDirection();
+            if(direction == WatchUi.SWIPE_LEFT) {
+                onEscape();
+            } else {
+                onContinue();
+            }
+
+            return true;
+        }
+
+        private function onContinue() {
+            WatchUi.pushView(
+                new Rez.Menus.Main(),
+                new MainMenuDelegate(),
+                WatchUi.SLIDE_UP
+            );
+        }
+
+        private function onEscape() {
+            // Let the user exit the app.
+            WatchUi.popView(WatchUi.SLIDE_LEFT);
         }
     }
 
