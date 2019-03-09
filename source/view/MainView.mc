@@ -49,7 +49,7 @@ module ClimbingView
         }
 
         private function onContinue() {
-            WatchUi.pushView(
+            WatchUi.switchToView(
                 new Rez.Menus.Main(),
                 new MainMenuDelegate(),
                 WatchUi.SLIDE_UP
@@ -69,9 +69,6 @@ module ClimbingView
         }
 
         function onMenuItem(selectedItem) {
-            // Remove the main view with the image from the view stack to save memory.
-            WatchUi.popView(WatchUi.SLIDE_UP);
-            
             if(selectedItem == :ViewHistory) {
                 openHistoryView();
             } else {
@@ -91,8 +88,7 @@ module ClimbingView
         private function openHistoryView() {
             var sessionAccessor = Storage.getSessionAccessor();
             var sessions = sessionAccessor.getSessions();
-            var historyViewModel = sessionHistoryToViewModel(sessions);
-            var controller = new HistoryController(historyViewModel);
+            var controller = new HistoryController(sessions);
 
             WatchUi.pushView(
                 controller.getView(),
