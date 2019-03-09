@@ -77,6 +77,7 @@ module ClimbingView
         }
 
         private function openActiveSessionView() {
+            vibrateWatch();
             var controller = new ClimbingSessionController();
             WatchUi.pushView(
                 controller.getView(),

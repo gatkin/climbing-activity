@@ -96,6 +96,7 @@ module ClimbingView
         }
 
         private function restoreSessionView() {
+            vibrateWatch();
             self.startTimer();
             self.view.update(self.getViewModel());
         }
@@ -103,6 +104,7 @@ module ClimbingView
         private function startClimb() {
             self.timer.stop();
             self.climbingSession.startNewClimb(Time.now());
+            vibrateWatch();
 
             var climbController = new ClimbController(
                 self,
@@ -110,7 +112,11 @@ module ClimbingView
                 self.climbingSession.getLastClimbType()
             );
 
-            WatchUi.pushView(climbController.getView(), climbController, WatchUi.SLIDE_UP);
+            WatchUi.pushView(
+                climbController.getView(),
+                climbController,
+                WatchUi.SLIDE_UP
+            );
         }
 
         private function startTimer() {
